@@ -133,7 +133,7 @@ def query_nvd(product: str, version: str, timeout: int = 8, api_key: str = "") -
     if api_key:
         req.add_header("apiKey", api_key)
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 - fixed https endpoint constant
             data = json.loads(resp.read().decode("utf-8", "replace"))
     except Exception:
         return []
@@ -174,7 +174,7 @@ def query_epss(cve_ids: list[str], timeout: int = 6) -> dict[str, dict[str, floa
     qs = urllib.parse.urlencode({"cve": ",".join(clean_ids[:20])})
     req = urllib.request.Request(f"{EPSS_ENDPOINT}?{qs}", headers={"User-Agent": _UA})
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 - fixed https endpoint constant
             data = json.loads(resp.read().decode("utf-8", "replace"))
     except Exception:
         return {}

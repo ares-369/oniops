@@ -84,7 +84,7 @@ kali:
 #  using one fixed header. Credentials are referenced ONLY as ${ENV_VAR} and
 #  resolved at login time; they never reach findings, logs or reports.
 #  Full json_login / form_login examples (VAmPI, Juice Shop, DVWA) are in
-#  docs/TARGET_AUTH.md. Leave this out for the classic static-header behaviour.
+#  docs/target-auth.md. Leave this out for the classic static-header behaviour.
 # ---------------------------------------------------------------------
 # target_auth:
 #   low_priv:

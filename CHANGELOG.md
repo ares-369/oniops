@@ -7,6 +7,27 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+### Security
+- The web UI no longer loads fonts from an external font service, so opening it makes no request
+  outside the server (it uses the system fonts). A test checks that no template loads anything from
+  the internet.
+- CI runs bandit (medium and high severity fail the build) and pip-audit over every extra. The
+  findings that are by design (trust-on-first-use host keys, the SSH command runner, fixed API URLs)
+  are marked with a `# nosec` comment giving the reason. Invisible characters in the injection filter's
+  source are now written as escapes.
+
+### Changed
+- The icon font ships only the 81 icons the UI uses (6 KB instead of about 3.6 MB of font files);
+  `scripts/build_icons.py` rebuilds it and `tests/test_icons.py` catches a missing icon. The wheel is
+  about 240 KB.
+- Docs file names are lower case (`docs/install.md`, `docs/benchmarks.md`, `docs/security-packs.md`,
+  `docs/target-auth.md`). The threat model moved from `SECURITY.md` to `docs/threat-model.md`;
+  `SECURITY.md` now holds the reporting policy only.
+- `pip install -e '.[dev]'` installs the test and lint tools. CI checks that the core install stays at
+  seven packages and that the wheel stays small.
+- `docs/project-standard.md`: the naming, versioning, packaging and release rules shared with the
+  author's other tools.
+
 ## [0.4.9-beta] — 2026-11-12
 
 ### Added
@@ -48,14 +69,14 @@ behaviour may still change between releases.
   so short-lived tokens (for example VAmPI's ~60s JWTs) no longer collapse the
   access-control differential into anonymous requests. Credentials are referenced
   only as `${ENV_VAR}` and never reach findings, logs or reports. See
-  `docs/TARGET_AUTH.md`.
+  `docs/target-auth.md`.
 - **One-command install** (`scripts/install.sh`): creates a virtualenv, installs
   OniOps, seeds `config.yaml`/`.env` from the examples without overwriting them,
   and generates a random `ONIOPS_SECRET_KEY` when missing. Idempotent.
 - Public-app benchmark harness: `oniops benchmark --suite <crapi|juice_shop|vampi> --target <ip>`
   scores an assessment's findings against labeled known bugs. Only verified findings
   count, matching is one-to-one, and verified findings outside the labels are listed for triage, so
-  precision is reported as a range until they are classified with `--triage`. See `docs/BENCHMARKS.md`.
+  precision is reported as a range until they are classified with `--triage`. See `docs/benchmarks.md`.
 
 ### Fixed
 - The web UI now honours `ONIOPS_DB_PATH`, so it reads and writes the same ledger
@@ -76,7 +97,7 @@ behaviour may still change between releases.
   no longer excludes files the controller image needs; Docker Compose requires a
   login (the unauthenticated-network opt-in is a commented, clearly labelled
   block). The systemd unit runs as a dedicated non-root user from `/opt/oniops`, and
-  the README and `docs/INSTALL.md` document that path. The Proxmox LXC script
+  the README and `docs/install.md` document that path. The Proxmox LXC script
   points at the real repository. `known_hosts` defaults to the writable `./data`
   directory so trust-on-first-use host keys persist.
 - CLI hardening: `oniops assess` rejects an unknown `--profile` instead of silently
@@ -113,7 +134,7 @@ behaviour may still change between releases.
   read-only AWS account/IAM, security-group, EKS endpoint and S3 policy/ACL/encryption checks
   (`oniops cloud-audit aws`).
 - Semantic versions, pack metadata, nested discovery and SHA-256 source hashes for network playbooks
-  and AI probe packs. See `docs/SECURITY_PACKS.md`.
+  and AI probe packs. See `docs/security-packs.md`.
 - OpenAPI BOPLA analysis now follows nested local references, composition and arrays, and reads
   OpenAPI 2 body/form parameters plus OpenAPI 3 vendor JSON schemas without fetching external refs.
 - Playbook tool requirements now include every executed binary. `sqlmap` and `hydra` packs require

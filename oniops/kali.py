@@ -59,7 +59,7 @@ def docker_worker_argv(host, cmd_args: list[str], timeout: int = 90,
         "--cap-add=SETUID", "--cap-add=SETGID", "--cap-add=SETPCAP",
         "--security-opt=no-new-privileges",
         "--pids-limit", str(pids), "--memory", f"{memory}m", "--cpus", str(cpus),
-        "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=256m",
+        "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=256m",  # nosec B108 - tmpfs inside the disposable worker container
         "--env", "HOME=/tmp", "--env", "TMPDIR=/tmp",
         "--env", f"ONIOPS_WORKER_UID_GID={user}",
         "--env", f"ONIOPS_SCOPE_CIDRS={','.join(networks)}",
@@ -109,7 +109,7 @@ class KaliRunner:
         mode = (self.host.verify_host_key or "tofu").lower()
         kh = Path(self.host.known_hosts)
         if mode == "insecure":
-            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())  # nosec B507 - only in the insecure / trust-on-first-use host key modes the operator chose
             return
         if kh.exists():
             try:
@@ -120,7 +120,7 @@ class KaliRunner:
             client.set_missing_host_key_policy(paramiko.RejectPolicy())
         else:  # tofu
             kh.parent.mkdir(parents=True, exist_ok=True)
-            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())  # nosec B507 - only in the insecure / trust-on-first-use host key modes the operator chose
             self._persist_kh = str(kh)
 
     def _client(self) -> paramiko.SSHClient:
@@ -182,7 +182,7 @@ class KaliRunner:
                 pass
 
         try:
-            _stdin, stdout, stderr = client.exec_command(command, timeout=timeout)
+            _stdin, stdout, stderr = client.exec_command(command, timeout=timeout)  # nosec B601 - arguments are shlex-quoted and scope-guarded in run() first
             out = stdout.read().decode("utf-8", "replace")
             err = stderr.read().decode("utf-8", "replace")
             rc = stdout.channel.recv_exit_status()

@@ -1,70 +1,27 @@
-# OniOps Security & Threat Model (`v0.3.1-beta`)
+# Security
 
-OniOps is an offensive security platform **and** an LLM-driven application that executes commands on an attack host. It is built to the same security standards it tests against. This document defines OniOps's **Threat Model**, **Deterministic Trust Boundaries**, **Cryptographic Evidence Provenance**, and **Framework Alignment**.
+## Reporting a vulnerability
 
-## Reporting a Vulnerability
-Thank you for helping keep OniOps and its users safe. Please open a private security advisory at `https://github.com/ares-369/oniops/security/advisories/new` (or contact `@ares-369` via GitHub) rather than a public issue for exploitable bugs.
+Please report vulnerabilities privately, through the repository's
+[private security advisory](https://github.com/ares-369/oniops/security/advisories/new) feature, not in
+a public issue. Include steps to reproduce and the version or commit.
 
-OniOps is maintained by one person in spare time, so responses are best-effort — I will aim to acknowledge a report within a week and keep you updated on a fix. Reporters are credited in the changelog unless they prefer otherwise.
+OniOps is maintained by one person in spare time, so responses are best-effort: I aim to acknowledge a
+report within a week and keep you updated on a fix. Reporters are credited in the changelog unless they
+prefer otherwise.
 
----
+## Supported versions
 
-## 1. Core Architectural Principle: Deterministic Policy, Probabilistic Reasoning
+OniOps is beta software. Fixes go into the latest release only.
 
-The LLM is **never** the authority that decides whether a target is in scope, whether a command is safe to execute, or whether a vulnerability is verified.
+## More
 
-```text
-[LLM Planner / Agent]  --(proposes JSON action)-->  [Deterministic Scope & Command Guard (oniops/scope.py)]
-                                                              │
-                                                              ▼
-[Independent Validator (oniops/findings.py)]  <--(raw stdout)-- [SSH / Local Execution Plane (oniops/kali.py)]
-        │
-        ▼
-[Secret Redaction + SHA-256 Evidence Hash + <untrusted_tool_output> Quarantine]
-```
+- [docs/threat-model.md](docs/threat-model.md): trust boundaries and the defences in code.
+- [Known limitations](README.md#known-limitations) in the README.
 
-### Trust Boundaries & Defenses
-1. **Strict Scope Allow-List (`oniops/scope.py`):**
-   - OniOps refuses any target outside `scope.allowed_cidrs` and `scope.allowed_hosts`. Excluded hosts/CIDRs (`scope.exclude`) always take precedence.
-   - `Scope.guard_command()` inspects every raw command string for IPv4 literals and blocks execution if any IP falls outside the authorized scope.
-2. **Non-Destructive Command Guard (`oniops/scope.py`):**
-   - Blocks destructive shell patterns, fork bombs, filesystem wipes (`rm -rf`, `mkfs`, `dd`), and unapproved exploitation flags before they reach the SSH channel.
-   - Commands are constructed as explicit `argv` lists and quoted with `shlex.join()` — never raw string interpolation.
-3. **Indirect Prompt-Injection Quarantine (`oniops/agent.py`):**
-   - Malicious targets may embed adversarial instructions inside HTTP `Server` headers, HTML titles, or OpenAPI descriptions (e.g., `Ignore all previous instructions...` or `<|im_start|>system`).
-   - `quarantine_output()` strips known prompt-injection directives, condenses noisy scanner output (`<= 2,200` chars), masks credentials, and wraps all tool output inside `<untrusted_tool_output tool="...">...</untrusted_tool_output>` delimiters with a system boundary rule instructing the model to treat the contents strictly as passive data.
-   - Before matching, text is Unicode-normalised (NFKC) and stripped of invisible characters (zero-width, bidirectional overrides), and base64 blobs are decoded and checked, so split, look-alike or encoded instructions are caught too. `tests/test_prompt_injection.py` covers 17 injection shapes and checks that normal output is not altered.
-   - **Limits, stated plainly:** a pattern filter cannot catch every paraphrase. It is a first layer only. The protection that matters is the second layer: the model can only choose from a fixed list of tools, every target is checked against the scope allow-list, and destructive commands are refused. The same test file verifies that a model which fully obeys an injected instruction still cannot scan outside scope, run arbitrary commands, or run destructive ones.
-4. **Pre-LLM Secret Redaction, SHA-256 Provenance & Optional HMAC-Signed Manifests (`oniops/findings.py`):**
-   - `redact_secrets()` masks Bearer tokens, cookies, OpenAI/GitHub/AWS keys, and password assignments **before** evidence is written to SQLite and **before** telemetry is sent to any external LLM provider (`webui.py`).
-   - Every finding record stores a tamper-evident `evidence_sha256` digest and a category-calibrated `confidence` level (`HIGH` / `MEDIUM` / `LOW`).
-   - Every assessment produces a canonical execution manifest (`build_assessment_manifest`) with a `manifest_sha256` integrity hash. The hash shows whether the manifest was edited, but anyone can recompute it, so on its own it does not prove who produced it.
-   - The manifest is signed with `HMAC-SHA256` (`signed: true`, `signature: hmac-sha256:...`) **only when a persistent signing key is set** (`ONIOPS_SECRET_KEY` in `.env`, or `auth.secret_key` in `config.yaml`). Without one it is marked `signed: false`, `signature: null` with an `unsigned_reason`. `verify_assessment_manifest()` returns `False` for unsigned manifests, an empty key, a wrong key or edited content; `manifest_verification_status()` gives the reason.
-   - Earlier releases fell back to a built-in key string when none was set. Because this repository is public, those signatures could be forged by anyone, so they are no longer produced and never verify. Webhook alerts follow the same rule: the `X-ONIOPS-Signature` header is sent only when `ONIOPS_SECRET_KEY` is set.
-   - SQLite persistence runs with `PRAGMA journal_mode=WAL` and `PRAGMA busy_timeout=5000` for lock-free concurrent reads and background job writes.
-5. **Independent Finding & BOLA Content Validation (`oniops/findings.py`, `oniops/greybox.py`, `oniops/agent.py`):**
-   - Agent-submitted findings (`report_finding`) and scanner outputs are checked by `validate_evidence()` against live HTTP status codes and expected response indicators before being marked `VERIFIED`.
-   - OpenAPI BOLA/BFLA probes (`probe_openapi`) inspect both HTTP status codes and response bodies (`validate_bola_response_content`), automatically filtering out `HTTP 200` HTML login shells and empty JSON (`{}`, `[]`) stubs.
-6. **Authentication, 3-Tier RBAC, Rate-Limiting & CSRF Guard (`oniops/auth.py`):**
-   - Supports `none` (trusted network), `basic`, `local` (`PBKDF2-HMAC-SHA256` with **600,000** OWASP-recommended iterations), `oidc` (OpenID Connect SSO), and `proxy` (trusted reverse-proxy header with IP allow-list).
-   - Enforces 3-tier Role-Based Access Control (`viewer` = read-only GETs + PDF export; `operator` = can run scans/agents/retests but cannot edit `config.yaml` or scope; `admin` = full control), a sliding-window `/login` brute-force limiter (`10 attempts / 60s` -> `HTTP 429`), and Same-Origin `Origin` CSRF validation on cookie-authenticated state-changing requests.
+Deployment advice:
 
----
-
-## 2. Framework Alignment
-
-### OWASP LLM Top 10
-- **LLM01 Prompt Injection** — mitigated via `quarantine_output()` regex stripping + `<untrusted_tool_output>` XML isolation + fixed 12-tool JSON action dispatcher (`oniops/agent.py`).
-- **LLM02 Insecure Output Handling** — model output is rendered with HTML-escaped Markdown; model text is never passed to `eval`, `exec`, or a shell.
-- **LLM06 Sensitive Information Disclosure** — API keys live in `.env` / `secrets/` (git-ignored), config responses redact secret fields, and `redact_secrets()` scrubs tool output prior to LLM reporting.
-- **LLM08 Excessive Agency** — the autonomous agent can only invoke 12 registered reconnaissance/validation tools on in-scope targets.
-- **LLM10 Unbounded Consumption** — per-command timeouts, 12-step agent budget cap, and cooperative job `pause`/`resume`/`cancel` controls (`oniops/jobs.py`).
-
-### MITRE ATLAS & NIST AI RMF
-- OniOps's AI red-team module (`oniops/aisec.py`) maps 14 built-in single-turn probes, 6 prompt converters, 3-turn Crescendo escalation, and declarative YAML probe packs (`playbooks/ai_probes/*.yaml`) to **OWASP LLM Top 10**, **MITRE ATLAS**, **NIST AI RMF**, and **Google SAIF / ISO 42001**.
-
----
-
-## 3. Remaining Operational Considerations
-- **Transport Encryption:** OniOps serves HTTP via Waitress; always place it behind a TLS-terminating reverse proxy (Nginx, Caddy, Traefik, or Nginx Proxy Manager) when exposed beyond `127.0.0.1`.
-- **Attack Host Isolation:** Use a dedicated, least-privilege Kali VM or container for the SSH runner (`kali.host`) with key-based authentication and `known_hosts` verification (`tofu` or `strict`).
+- Serve it behind a TLS-terminating reverse proxy when it is reachable beyond `127.0.0.1`.
+- Use a dedicated, least-privilege attack host for the SSH runner, with key-based login and
+  `known_hosts` verification (`tofu` or `strict`).
+- Keep `.env` and `secrets/` readable only by the service user.

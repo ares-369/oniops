@@ -246,7 +246,7 @@ _INJECTION_PATTERNS = [
 
 # Invisible characters used to split keywords past filters (zero-width, BOM,
 # bidirectional overrides, word joiners).
-_INVISIBLE = re.compile("[​-‏‪-‮⁠-⁤﻿]")
+_INVISIBLE = re.compile("[\u200b-\u200f\u202a-\u202e\u2060-\u2064\ufeff]")
 _B64_TOKEN = re.compile(r"\b[A-Za-z0-9+/]{24,}={0,2}")
 
 

@@ -19,11 +19,11 @@ helps.
 
 1. Fork the repo and create a branch for your change.
 2. Copy `config.example.yaml` to `config.yaml` and `.env.example` to `.env`.
-3. Run OniOps locally with `python -m oniops` (see [`docs/INSTALL.md`](docs/INSTALL.md)).
+3. Run OniOps locally with `python -m oniops` (see [`docs/install.md`](docs/install.md)).
 4. Run the checks before opening a PR:
 
    ```bash
-   pip install -r requirements.txt pytest ruff
+   pip install -e '.[dev]'
    ruff check oniops/ webui.py tests/
    pytest tests/
    ```

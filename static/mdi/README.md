@@ -1,25 +1,5 @@
-> *Note:* Please use the main [MaterialDesign](https://github.com/Templarian/MaterialDesign/issues) repo to report issues. This repo is for distribution of the Webfont files only.
+# Icons
 
-# Webfont - Material Design Icons
-
-Webfont distribution for the [Material Design Icons](https://materialdesignicons.com).
-
-```
-npm install @mdi/font
-```
-
-> Package built with [@mdi/font-build](https://github.com/Templarian/MaterialDesign-Font-Build).
-
-## Related Packages
-
-[NPM @MDI Organization](https://npmjs.com/org/mdi)
-
-- JavaScript/Typescript: [MaterialDesign-JS](https://github.com/Templarian/MaterialDesign-JS)
-- SVG: [MaterialDesign-SVG](https://github.com/Templarian/MaterialDesign-SVG)
-- Font-Build [MaterialDesign-Font-Build](https://github.com/Templarian/MaterialDesign-Font-Build)
-- Desktop Font: [MaterialDesign-Font](https://github.com/Templarian/MaterialDesign-Font)
-
-## Learn More
-
-- [MaterialDesignIcons.com](https://materialdesignicons.com)
-- https://github.com/Templarian/MaterialDesign
+A subset of [Material Design Icons](https://github.com/Templarian/MaterialDesign) 7.4.47 (licence in
+`LICENSE`): only the icons the UI uses, in one woff2 file. `scripts/build_icons.py` rebuilds it from the
+full `@mdi/font` package after a new icon is used; `tests/test_icons.py` fails when one is missing.

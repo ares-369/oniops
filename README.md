@@ -99,7 +99,7 @@ still edit `config.yaml` (scope and attack host), see
   once and the request retried, so short-lived JWTs (for example VAmPI's ~60s tokens) no longer
   collapse the access-control differential into anonymous requests. Credentials live only in config or
   the environment (`${ENV_VAR}`) and never reach findings, logs or reports. See
-  [docs/TARGET_AUTH.md](docs/TARGET_AUTH.md).
+  [docs/target-auth.md](docs/target-auth.md).
 - **41 Kali Arsenal Tools + 12 Bounded ReAct Agent Tools** — manages and executes a
   full catalog of **41 offensive tools** across YAML Playbooks, scan profiles, and the
   Arsenal UI, while restricting the optional AI agent loop to a curated subset of
@@ -126,7 +126,7 @@ still edit `config.yaml` (scope and attack host), see
   EPSS** 30-day exploitation probability enrichment.
 - **Declarative YAML Playbooks & AI Probe Packs** — drop `.yaml` network/WAPT
   playbooks into `playbooks/` and custom AI safety probe packs into
-  `playbooks/ai_probes/` without touching Python code. See [pack format](docs/SECURITY_PACKS.md).
+  `playbooks/ai_probes/` without touching Python code. See [pack format](docs/security-packs.md).
 - **Versioned security packs** — pack metadata includes semantic versions and content hashes; nested
   directories load and duplicate IDs are rejected.
 - **Disposable scanner workers and local image scanning** — optionally run each scanner command in a
@@ -378,7 +378,7 @@ Run OniOps from a checkout of this repository (`python -m oniops`, or `oniops` a
 `static/` are not part of the installed package, and `oniops serve` will say so.
 
 More targets (WSL2, Raspberry Pi, cloud VM, Kubernetes, Unraid,
-air-gapped) are covered in [`docs/INSTALL.md`](docs/INSTALL.md).
+air-gapped) are covered in [`docs/install.md`](docs/install.md).
 
 ### Configuration files and environment variables
 
@@ -480,7 +480,7 @@ python -m oniops demo
 python -m oniops benchmark --demo-evaluation --json
 
 # Score an assessment of a public vulnerable app (crAPI, Juice Shop, VAmPI) against labeled bugs
-python -m oniops benchmark --suite vampi --target 10.10.0.5 --markdown   # see docs/BENCHMARKS.md
+python -m oniops benchmark --suite vampi --target 10.10.0.5 --markdown   # see docs/benchmarks.md
 
 # Bounded browser discovery of a target inside the configured scope
 python -m oniops crawl https://app.example.test --max-pages 50 --output crawl.json
@@ -550,7 +550,7 @@ tools below already does what you need, it is probably the better choice today.
 
 ### Known limitations
 
-- **No published detection results yet.** A [benchmark harness](docs/BENCHMARKS.md) for crAPI,
+- **No published detection results yet.** A [benchmark harness](docs/benchmarks.md) for crAPI,
   OWASP Juice Shop and VAmPI exists, but no scored results are published. One small early lab run
   on VAmPI found its real unauthenticated API exposures without false positives, but **missed**
   authenticated horizontal BOLA on parameterised routes (for example `/users/v1/{username}`).
@@ -585,9 +585,9 @@ DeepTeam. Thank you to everyone who builds and maintains them.
 
 ## Security
 
-OniOps tries to follow the same security guidance it tests for — see
-[`SECURITY.md`](SECURITY.md). If you find a vulnerability in OniOps itself,
-please report it privately.
+Trust boundaries and the defences in code are in [docs/threat-model.md](docs/threat-model.md).
+If you find a vulnerability in OniOps itself, please report it privately as described in
+[`SECURITY.md`](SECURITY.md).
 
 ## Contributing
 

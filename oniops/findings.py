@@ -359,7 +359,7 @@ def dispatch_webhook_alert(
         headers["X-ONIOPS-Signature"] = f"{_SIG_PREFIX}{sig}"
     req = urllib.request.Request(url, data=body, headers=headers, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=5) as resp:  # nosec B310 - scheme checked above (http/https only)
             return 200 <= int(getattr(resp, "status", 200)) < 300
     except Exception:
         return False

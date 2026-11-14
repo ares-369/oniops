@@ -18,10 +18,10 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -45,8 +45,8 @@ jobs:
     name: Wheel install smoke test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Build wheel and sdist
@@ -58,6 +58,11 @@ jobs:
         run: |
           python -m venv /tmp/v
           /tmp/v/bin/pip install dist/*.whl
+          # stay light: seven required packages, and a small wheel
+          core=$(/tmp/v/bin/python -c "import importlib.metadata as m; print(sum('extra ==' not in r for r in m.requires('oniops')))")
+          size=$(stat -c %s dist/*.whl)
+          echo "required packages: $core, wheel: $size bytes"
+          test "$core" -eq 7 && test "$size" -lt 1500000
           cd /tmp
           export HOME=/tmp/home
           /tmp/v/bin/oniops version
@@ -70,13 +75,31 @@ jobs:
           for i in $(seq 1 60); do curl -fs http://127.0.0.1:8597/healthz && break; sleep 1; done
           curl -fs -o /dev/null http://127.0.0.1:8597/
           curl -fs -o /dev/null http://127.0.0.1:8597/static/mdi/LICENSE
+          curl -fs -o /dev/null http://127.0.0.1:8597/static/mdi/fonts/icons.woff2
           test -f /tmp/home/.oniops/data/oniops.sqlite
+
+  security:
+    name: Security scans (bandit, pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip bandit pip-audit
+      - name: Static analysis (medium and high severity fail the build)
+        run: bandit -q -r oniops webui.py -ll
+      - name: Known vulnerabilities in dependencies (all extras)
+        run: |
+          python -m venv /tmp/audit && /tmp/audit/bin/pip install -q --upgrade pip
+          /tmp/audit/bin/pip install -q '.[all]'
+          pip-audit --progress-spinner off --path "$(/tmp/audit/bin/python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')" --skip-editable
 
   secret-scan:
     name: Secret Scan (Gitleaks)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -89,10 +112,10 @@ jobs:
     name: Browser Integration (Playwright)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -109,7 +132,7 @@ jobs:
     name: Scanner Worker Image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build disposable scanner image
         run: docker build --file Dockerfile.worker --tag oniops-worker:ci .
