@@ -159,3 +159,34 @@ def test_cidrs_property(scope):
 def test_autodetect_subnet_returns_cidr_or_none():
     res = autodetect_subnet()
     assert res is None or res.endswith("/24")
+
+
+# ───────────────────────── any-form addresses in commands ─────────────────────────
+class TestAnyFormAddresses:
+    """The resolver tools use (inet_aton) reads hex, single-number, octal and short forms. The command guard
+    must check those too, for every command: not only the listed tools, and not only plain dotted quads."""
+
+    @pytest.mark.parametrize("cmd", [
+        "nmap 0x08080808", "nmap 134744072", "nmap 010.0.0.1", "curl 0x08080808", "curl 010.0.0.1",
+        "ping -c1 8.8.8.8", "ping -c1 8.8.8.8.", "nc -zv 8.8.8.8 80", "nc -zv 134744072 80",
+        "bash -c 'nmap 8.8.8.8'", "sh -c 'curl http://8.8.8.8/'", "timeout 30 nmap 8.8.8.8", "env nmap 8.8.8.8",
+        "hydra -l a -p b 0x08080808 ssh", "nikto -h 0x08080808", "socat - TCP:8.8.8.8:80",
+        "ssh root@8.8.8.8", "ssh root@0x08080808", "curl http://[::ffff:8.8.8.8]/",
+    ])
+    def test_out_of_scope_any_form_is_refused(self, scope, cmd):
+        with pytest.raises(ScopeViolation):
+            scope.guard_command(cmd)
+
+    @pytest.mark.parametrize("cmd", [
+        "nmap 10.0.0.50", "nmap -p 80,443 10.0.0.50", "curl http://10.0.0.50/", "ping -c1 10.0.0.50",
+        "nmap 0xa000032", "curl 167772210", "bash -c 'nmap -sV 10.0.0.50'",
+        "searchsploit apache 2.4.49", "apt-get install -y python3=3.12.3-0ubuntu2", "echo ok",
+        "nmap --top-ports 200 -T4 10.0.0.50", "sleep 10", "timeout 5 true", "ssh root@10.0.0.50",
+        "nmap -p 1-65535 10.0.0.50", "ffuf -u http://10.0.0.50/FUZZ -w /usr/share/wordlists/dirb/common.txt -t 40",
+    ])
+    def test_in_scope_and_ordinary_commands_pass(self, scope, cmd):
+        scope.guard_command(cmd)
+
+    def test_the_message_shows_what_the_form_means(self, scope):
+        with pytest.raises(ScopeViolation, match=r"0x08080808 \(= 8\.8\.8\.8\)"):
+            scope.guard_command("curl 0x08080808")

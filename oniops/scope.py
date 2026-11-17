@@ -132,6 +132,11 @@ class Scope:
                 "Blocked: command matches a destructive/DoS pattern and "
                 "scope.non_destructive is enabled."
             )
+        self._guard_any_address(command)
+        for match in _HTTP_URL_RE.finditer(command or ""):
+            parsed = urlsplit(match.group(0).rstrip(")],;"))
+            if parsed.hostname and not _NET_TOOLS_RE.search(command or ""):
+                self.resolve(parsed.hostname)        # a URL in any command, not only listed tools
         if _NET_TOOLS_RE.search(command or ""):
             for match in _HTTP_URL_RE.finditer(command):
                 parsed = urlsplit(match.group(0).rstrip(")],;"))
@@ -206,6 +211,38 @@ class Scope:
                         f"Scope violation in command: target {m.group(0)} is outside the authorized "
                         f"Rules of Engagement ({', '.join(self.cfg.scope.allowed_cidrs)})."
                     )
+
+    # ---- addresses written in any form the system resolver accepts ----
+    _ADDR_TOKEN_RE = re.compile(
+        r"(?<![\w.-])("
+        r"0[xX][0-9a-fA-F]{1,8}"                                   # 0x08080808
+        r"|(?:(?:0[xX][0-9a-fA-F]+|\d+)\.){1,3}(?:0[xX][0-9a-fA-F]+|\d+)"   # dotted, 2-4 parts, any base
+        r"|\d{8,10}"                                               # a whole address as one number
+        r")(?=\.?(?:$|[\s'\"/:;,)\]}>|&]))"
+    )
+
+    def _guard_any_address(self, command: str) -> None:
+        """Every token the C resolver would read as an IPv4 address must be in scope.
+
+        Tools resolve targets with inet_aton, which also accepts hexadecimal (0x08080808), a single
+        number (134744072), octal parts with leading zeros (010.0.0.1 is 8.0.0.1) and short forms
+        (8.8 is 8.0.0.8). Checked for every command, whatever tool it starts with, so a wrapper
+        (bash -c, timeout, env) or an unlisted tool cannot carry an out-of-scope address past the guard.
+        """
+        for m in self._ADDR_TOKEN_RE.finditer(command or ""):
+            tok = m.group(1)
+            if re.fullmatch(r"\d+(?:\.\d+){1,2}", tok):
+                continue          # 1.2 / 1.2.3: version numbers and decimals, far more often than short addresses
+            try:
+                addr = ipaddress.IPv4Address(socket.inet_aton(tok))
+            except OSError:
+                continue          # 10.0.0.999 and similar are not addresses to the resolver either
+            if not self.is_in_scope(str(addr)):
+                shown = tok if str(addr) == tok else f"{tok} (= {addr})"
+                raise ScopeViolation(
+                    f"Scope violation in command: target {shown} is outside the authorized "
+                    f"Rules of Engagement ({', '.join(self.cfg.scope.allowed_cidrs)})."
+                )
 
     def _range_in_scope(self, first: ipaddress.IPv4Address | ipaddress.IPv6Address,
                         last: ipaddress.IPv4Address | ipaddress.IPv6Address) -> bool:

@@ -8,6 +8,14 @@ behaviour may still change between releases.
 ## [Unreleased]
 
 ### Security
+- The command scope guard now checks every IPv4 address in every command, in every form the system resolver
+  accepts. Before, it inspected only commands that started with one of 15 listed tools, so `ping`, `nc`,
+  `ssh`, `socat` and wrapped commands (`bash -c '...'`, `timeout 30 nmap ...`, `env nmap ...`) were not checked,
+  and it skipped address forms it could not parse, so `nmap 0x08080808`, `nmap 134744072` and
+  `curl 010.0.0.1` (octal: 8.0.0.1) got through. The agent and chat paths were not exposed (they resolve every
+  target through `scope.resolve()` first, which handles these forms); the guard is the second line and the only
+  check on a retest command replayed from the database. A four-part number such as a version string `1.2.3.4`
+  in a command is now read as an address too.
 - The web UI no longer loads fonts from an external font service, so opening it makes no request
   outside the server (it uses the system fonts). A test checks that no template loads anything from
   the internet.
