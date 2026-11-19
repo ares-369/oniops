@@ -7,6 +7,8 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+## [0.4.10-beta] — 2026-11-20
+
 ### Security
 - The command scope guard now checks every IPv4 address in every command, in every form the system resolver
   accepts. Before, it inspected only commands that started with one of 15 listed tools, so `ping`, `nc`,
