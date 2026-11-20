@@ -126,7 +126,7 @@ jobs:
           python -m playwright install --with-deps chromium
 
       - name: Run loopback browser integration checks
-        run: pytest tests/test_browser_runtime.py -v
+        run: pytest tests/test_browser_runtime.py tests/test_ui_smoke.py -v -rs
 
   scanner-worker:
     name: Scanner Worker Image

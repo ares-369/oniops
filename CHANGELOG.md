@@ -7,6 +7,11 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+### Added
+
+- CI: a UI smoke test opens every view in headless Chromium (desktop and phone width), fails on script errors,
+  failed requests or "undefined" on screen, and checks the Settings attack-host row fits its card.
+
 ### Fixed
 
 - AI assessment report: it now uses the computed risk rating (from open ports and verified findings) instead of
