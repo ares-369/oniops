@@ -3,4 +3,4 @@
 A provider-agnostic, scope-locked autonomous red-team framework.
 """
 
-__version__ = "0.4.10-beta"
+__version__ = "0.4.11-beta"

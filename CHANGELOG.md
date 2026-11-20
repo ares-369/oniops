@@ -7,6 +7,14 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+## [0.4.11-beta] — 2026-11-20
+
+### Fixed
+
+- Settings, Attack Hosts: the row of fields was wider than its card, which pushed the Test and Del buttons out
+  of sight, so a host could not be tested from the UI. The fields now shrink to fit, and on a phone they wrap
+  to two per line so addresses are not cut.
+
 ## [0.4.10-beta] — 2026-11-20
 
 ### Security

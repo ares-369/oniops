@@ -922,7 +922,11 @@
     .rem-steps { margin: 8px 0 0 18px; padding: 0; font-size: 12.5px; line-height: 1.55; color: var(--text-main); }
     .rem-steps li { margin-bottom: 4px; }
     .cov-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  </style>
+      @media (max-width: 640px) {
+      /* attack host rows: two fields per line on a phone, so addresses are not cut */
+      .set-host-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important; }
+    }
+</style>
 </head>
 <body>
   <!-- Responsible-use terms: shown until the current user accepts. The server
@@ -2129,10 +2133,10 @@
 
         // Attack hosts (editable)
         const hostRow = (h) => `
-          <div class="set-host-row" style="display:grid; grid-template-columns: 1fr 1.3fr .7fr auto; gap:6px; align-items:center; padding:6px 0; border-bottom:1px solid var(--border-subtle);">
-            <input class="input" data-f="label" value="${esc(h.label || h.name)}" placeholder="label" aria-label="Attack host label" style="font-size:12px;"/>
-            <input class="input" data-f="host" value="${esc(h.host)}" placeholder="host / ip" aria-label="Attack host address" style="font-size:12px;"/>
-            <input class="input" data-f="user" value="${esc(h.user || 'root')}" placeholder="user" aria-label="SSH user" style="font-size:12px;"/>
+          <div class="set-host-row" style="display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1.3fr) minmax(0,.7fr) auto; gap:6px; align-items:center; padding:6px 0; border-bottom:1px solid var(--border-subtle);">
+            <input class="input" data-f="label" value="${esc(h.label || h.name)}" placeholder="label" aria-label="Attack host label" style="font-size:12px; width:100%; min-width:0;"/>
+            <input class="input" data-f="host" value="${esc(h.host)}" placeholder="host / ip" aria-label="Attack host address" style="font-size:12px; width:100%; min-width:0;"/>
+            <input class="input" data-f="user" value="${esc(h.user || 'root')}" placeholder="user" aria-label="SSH user" style="font-size:12px; width:100%; min-width:0;"/>
             <div style="display:flex; gap:5px; align-items:center;">
               <label style="font-size:11px; display:flex; gap:3px; align-items:center;"><input type="radio" name="defhost" data-f="default" ${h.default ? 'checked' : ''}/>def</label>
               <button class="btn btn-sm" onclick="testHostRow(this)">Test</button>
