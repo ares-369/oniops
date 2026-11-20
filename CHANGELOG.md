@@ -7,6 +7,13 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+### Fixed
+
+- AI assessment report: it now uses the computed risk rating (from open ports and verified findings) instead of
+  setting its own, and treats Exploit-DB title matches as unverified leads (they match on product name and may not
+  apply to the detected version). Before, a fast recon of an up-to-date OpenSSH 10.0 host was reported as
+  "High: OpenSSH has known vulnerabilities" because of title matches for versions below 7.7.
+
 ## [0.4.11-beta] — 2026-11-20
 
 ### Fixed

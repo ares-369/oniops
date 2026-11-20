@@ -914,14 +914,19 @@ def _run_assessment(target_ip: str, hostname: str, profile: str, ctl=None,
         "1. **Executive Exposure Summary** (attack surface & risk rating)\n"
         "2. **Enumerated Services & Attack Vectors** (ports, versions, weaknesses, MITRE ATT&CK IDs)\n"
         "3. **Exploitation Path** (most likely route to compromise, non-destructive)\n"
-        "4. **Prioritized Hardening Recommendations**"
+        "4. **Prioritized Hardening Recommendations**\n"
+        "Rules for honesty: use the computed risk rating given below as the report's risk rating; do not raise it. "
+        "Exploit-DB title matches are found by product name and may not apply to the detected version: call them "
+        "leads to check, never confirmed vulnerabilities. Say a service is vulnerable only when the evidence shows the "
+        "detected version is affected, or for verified findings. If nothing is confirmed, say so plainly."
     )
     user_prompt = (
         f"Target: {hostname} ({target_ip})\nProfile: {profile}\nOpen ports: {port_summary}\n"
+        f"Computed risk rating (from open ports and verified findings): {severity}\n"
         f"Findings detected: {finding_count}\n"
         f"Verified live services (PoC-validated): {verified_count}/{len(verified_services)}\n"
-        f"Known CVEs matched: {cve_intel.get('cve_count', 0)} | "
-        f"Public exploits matched: {cve_intel.get('exploit_count', 0)}\n\n"
+        f"Known CVEs matched (check each against the detected version): {cve_intel.get('cve_count', 0)} | "
+        f"Exploit-DB title matches (unverified leads, product-name match only): {cve_intel.get('exploit_count', 0)}\n\n"
         f"Attack-path reasoning:\n{cot}\n\nEvidence:\n{full_raw[:3000]}"
     )
     ai_report = redact_secrets(
