@@ -120,3 +120,23 @@ def test_systemd_unit_matches_how_the_app_starts():
     assert "WorkingDirectory=/opt/oniops" in unit
     assert "Environment=ONIOPS_CONFIG=/opt/oniops/config.yaml" in unit
     assert "ExecStart=/opt/oniops/venv/bin/python -m oniops" in unit
+
+
+def test_record_run_appends_json_lines(tmp_path):
+    import json
+
+    from oniops.cli import _record_run
+    f = tmp_path / "run.jsonl"
+    for st in ("ok", "error: TimeoutError"):
+        _record_run(str(f), "fast_recon on lab", "192.0.2.1", "192.0.2.9", "2026-01-01T00:00:00+00:00", st)
+    rows = [json.loads(x) for x in f.read_text().splitlines()]
+    assert [r["status"] for r in rows] == ["ok", "error: TimeoutError"]
+    assert set(rows[0]) == {"name", "target", "source", "started", "finished", "status"}
+
+
+def test_source_address_is_only_a_visible_ip():
+    from types import SimpleNamespace as N
+
+    from oniops.cli import _source_address
+    assert _source_address(N(host=N(host="192.0.2.9"))) == "192.0.2.9"
+    assert [_source_address(N(host=N(host=h))) for h in ("127.0.0.1", "kali", "")] == ["", "", ""]

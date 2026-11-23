@@ -9,6 +9,7 @@ behaviour may still change between releases.
 
 ### Added
 
+- `oniops assess --record FILE`: appends what ran, from where and when, to check afterwards what was detected.
 - CI: a UI smoke test opens every view in headless Chromium (desktop and phone width), fails on script errors,
   failed requests or "undefined" on screen, and checks the Settings attack-host row fits its card.
 

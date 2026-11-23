@@ -21,10 +21,12 @@ Usage examples:
 from __future__ import annotations
 
 import argparse
+import ipaddress
 import json
 import os
 import sqlite3
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from . import __version__
@@ -196,6 +198,10 @@ def cli_main(argv: list[str] | None = None) -> int:
     ass.add_argument("--auth-header", default="", help="Optional Grey-Box auth header")
     ass.add_argument("--low-priv-header", default="", help="Optional low-privilege role header for BOLA/BFLA diff")
 
+    ass.add_argument("--record", default="", metavar="FILE",
+                     help="Append one JSON line (name, target, attack host, start, end, status) to FILE, "
+                          "for checking afterwards what the defenders detected")
+
     df = sub.add_parser("diff", help="Compare an assessment against its previous baseline")
     df.add_argument("assessment_id", type=int, help="Assessment ID to diff")
     df.add_argument("--db", default="", help="Path to oniops.sqlite")
@@ -271,6 +277,23 @@ def cli_main(argv: list[str] | None = None) -> int:
     except (PermissionError, ScopeViolation) as exc:
         print(f"[OniOps] error: {exc}", file=sys.stderr)
         return 2
+
+
+def _source_address(runner) -> str:
+    """The attack host's address, when it is one the target can see ("" for a name or loopback)."""
+    try:
+        ip = ipaddress.ip_address(str(getattr(getattr(runner, "host", None), "host", "") or ""))
+    except ValueError:
+        return ""
+    return "" if ip.is_loopback else str(ip)
+
+
+def _record_run(path: str, name: str, target: str, source: str, started: str, status: str) -> None:
+    """One line about a finished assessment: what ran, from where and when. No output, findings or credentials."""
+    row = {"name": name, "target": target, "source": source, "started": started,
+           "finished": datetime.now(timezone.utc).isoformat(timespec="seconds"), "status": status}
+    with open(Path(path).expanduser(), "a", encoding="utf-8") as f:
+        f.write(json.dumps(row) + "\n")
 
 
 def _serve() -> int:
@@ -508,10 +531,21 @@ def _dispatch(ns, parser) -> int:
             return 2
         try:
             rt = webui.scope.resolve(ns.target)
-            res = webui._run_assessment(
-                rt.ip, rt.label, ns.profile,
-                auth_header=ns.auth_header, low_priv_header=ns.low_priv_header,
-            )
+            started, status = datetime.now(timezone.utc).isoformat(timespec="seconds"), "error: stopped"
+            try:
+                res = webui._run_assessment(
+                    rt.ip, rt.label, ns.profile,
+                    auth_header=ns.auth_header, low_priv_header=ns.low_priv_header,
+                )
+                # A failed scan command does not raise, so "ok" needs proof that the target was reached.
+                status = "ok" if res.get("ports_list") else "error: no open port seen"
+            except Exception as exc:
+                status = f"error: {type(exc).__name__}"
+                raise
+            finally:
+                if ns.record:
+                    _record_run(ns.record, f"{ns.profile} on {rt.label}", rt.ip, _source_address(webui.active_runner()),
+                                started, status)
         except (ScopeViolation, ValueError, PermissionError, FileNotFoundError) as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
