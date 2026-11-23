@@ -7,6 +7,8 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+## [0.4.12-beta] — 2026-11-23
+
 ### Added
 
 - `oniops assess --record FILE`: appends what ran, from where and when, to check afterwards what was detected.
@@ -22,6 +24,8 @@ behaviour may still change between releases.
 
 ### Security
 
+- Cross-origin state-changing requests are refused in every auth mode (before: only local and OIDC). Behind a proxy
+  that does not pass the public host name, set the external URL.
 - A non-ASCII username or password at login is refused instead of failing.
 
 ## [0.4.11-beta] — 2026-11-20

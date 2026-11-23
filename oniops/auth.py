@@ -172,6 +172,9 @@ def init_auth(app, cfg) -> None:
 
     @app.before_request
     def _guard():
+        if request.method in ("POST", "PUT", "DELETE", "PATCH") and not _origin_matches_request(cfg):
+            # Every mode: a browser also attaches proxy cookies and basic credentials, and reaches a local instance.
+            return Response("Forbidden: cross-origin state-changing request blocked (CSRF guard).", 403)
         if mode == "none":
             return None
         p = request.path
@@ -218,8 +221,6 @@ def init_auth(app, cfg) -> None:
         # local / oidc -> session
         user = session.get("user")
         if user:
-            if request.method in ("POST", "PUT", "DELETE", "PATCH") and not _origin_matches_request(cfg):
-                return Response("Forbidden: cross-origin state-changing request blocked (CSRF guard).", 403)
             role = session.get("role") or resolve_user_role(cfg, str(user))
             allowed, reason = check_rbac_permission(role, request.method, p, request.args)
             if not allowed:
