@@ -19,6 +19,10 @@ behaviour may still change between releases.
   apply to the detected version). Before, a fast recon of an up-to-date OpenSSH 10.0 host was reported as
   "High: OpenSSH has known vulnerabilities" because of title matches for versions below 7.7.
 
+### Security
+
+- A non-ASCII username or password at login is refused instead of failing.
+
 ## [0.4.11-beta] — 2026-11-20
 
 ### Fixed

@@ -130,7 +130,7 @@ def _verify_password(cfg, pw: str) -> bool:
     if cfg.auth.password_hash:
         return _check_hash(cfg.auth.password_hash, pw)
     if cfg.auth.password:
-        return hmac.compare_digest(pw, cfg.auth.password)
+        return hmac.compare_digest(pw.encode(), str(cfg.auth.password).encode())
     return False
 
 
@@ -181,7 +181,7 @@ def init_auth(app, cfg) -> None:
         if mode == "basic":
             a = request.authorization
             if (a and _verify_password(cfg, a.password or "")
-                    and hmac.compare_digest(a.username or "", cfg.auth.username)):
+                    and hmac.compare_digest((a.username or "").encode(), str(cfg.auth.username).encode())):
                 role = resolve_user_role(cfg, a.username or "")
                 allowed, reason = check_rbac_permission(role, request.method, p, request.args)
                 if not allowed:
@@ -244,7 +244,7 @@ def init_auth(app, cfg) -> None:
                 return Response("Too many login attempts. Please wait 60 seconds.", 429)
             u = request.form.get("username", "")
             pw = request.form.get("password", "")
-            if hmac.compare_digest(u, cfg.auth.username) and _verify_password(cfg, pw):
+            if hmac.compare_digest(u.encode(), str(cfg.auth.username).encode()) and _verify_password(cfg, pw):
                 session["user"] = u
                 return redirect("/")
             return render_template("login.html", error="Invalid credentials.",
