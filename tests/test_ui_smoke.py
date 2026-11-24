@@ -90,6 +90,10 @@ def test_every_view_loads_cleanly(server):
             page.evaluate("(v) => switchView(v)", v)
             page.wait_for_timeout(800)
             text = page.inner_text("body")
+            solid = page.evaluate("""() => [...document.querySelectorAll('.view-section.active .btn:not(.btn-primary)')]
+                .filter(b => b.checkVisibility() && getComputedStyle(b).backgroundColor !== 'rgba(0, 0, 0, 0)').length""")
+            if solid:
+                issues.append(f"[{v}] {solid} secondary buttons are drawn as primary")
             issues += [f"[{v}] shows {bad!r}" for bad in BAD_TEXT if bad in text]
         b.close()
     assert issues == []
@@ -126,3 +130,22 @@ def test_views_fit_a_phone(server):
                 wide.append(f"{v}: {w[0]}px wide on a {w[1]}px screen")
         b.close()
     assert wide == []
+
+
+def test_tool_and_host_text_is_escaped(server):
+    """Text from tools and hostnames must not become markup."""
+    bad = "<img src=x onerror=window.__x=1>"
+    with sync_api.sync_playwright() as p:
+        b = _browser(p)
+        page = b.new_page(viewport={"width": 1400, "height": 900})
+        page.route("**/api/intel?*", lambda r: r.fulfill(json={"exploits": [
+            {"id": "1", "title": bad, "type": bad, "platform": "x", "codes": bad}]}))
+        page.route("**/api/targets", lambda r: r.fulfill(json={"targets": [
+            {"hostname": bad, "ip": "192.0.2.1", "type": "host", "node": bad, "role": bad, "open_ports": "-",
+             "services": [{"port": 1, "service": bad}], "vulns": {"critical": 1, "high": 0, "medium": 0, "total": 1}}]}))
+        _open(page, server)
+        page.evaluate("() => { switchView('intel'); document.getElementById('exploitQueryInput').value = 'a'; searchExploitDb(); }")
+        page.wait_for_timeout(800)
+        assert page.locator("main img").count() == 0
+        assert page.evaluate("window.__x") is None
+        b.close()

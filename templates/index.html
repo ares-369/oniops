@@ -1,65 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-product="oniops" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OniOps // Offensive Neural Intelligence</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='lokiGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ef4444'/%3E%3Cstop offset='100%25' stop-color='%23dc2626'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='32,3 57,15 52,45 32,61 12,45 7,15' fill='%230d1117' stroke='url(%23lokiGrad)' stroke-width='2.5'/%3E%3Cpath d='M18 40 C13 26 16 12 25 6 C21 16 21 25 27 32 L32 37 L37 32 C43 25 43 16 39 6 C48 12 51 26 46 40 L39 36 L32 54 L25 36 Z' fill='url(%23lokiGrad)'/%3E%3Cpolygon points='23,31 29,34 25,36' fill='%23ffffff'/%3E%3Cpolygon points='41,31 35,34 39,36' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <title>OniOps</title>
+  <meta name="description" content="OniOps - Offensive Neural Intelligence" />
+  <link rel="icon" type="image/svg+xml" href="/static/img/logo.svg" />
+  <script src="/static/theme.js"></script>
   <link rel="stylesheet" href="/static/mdi/css/icons.css" />
   <style>
-    /* Neutral Dark Obsidian/Slate Theme with Red Accent */
-    :root, [data-theme="dark"] {
-      --bg-base: #090b10;
-      --bg-surface: #0d1117;
-      --bg-elevated: #141a23;
-      --bg-card: #11161f;
-      --bg-input: #0a0d13;
-      --border: #1f2735;
-      --border-subtle: #171d28;
-      --border-focus: #ef4444;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --primary: #ef4444;
-      --primary-hover: #f87171;
-      --primary-glow: rgba(239, 68, 68, 0.14);
-      --accent: #f97316;
-      --blue-team: #38bdf8;
-      --blue-glow: rgba(56, 189, 248, 0.12);
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --success: #22c55e;
-      --info: #38bdf8;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
-    }
-
-    [data-theme="light"] {
-      --bg-base: #f1f5f9;
-      --bg-surface: #ffffff;
-      --bg-elevated: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-input: #ffffff;
-      --border: #cbd5e1;
-      --border-subtle: #e2e8f0;
-      --border-focus: #dc2626;
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-dim: #64748b;
-      --primary: #dc2626;
-      --primary-hover: #b91c1c;
-      --primary-glow: rgba(220, 38, 38, 0.1);
-      --accent: #ea580c;
-      --blue-team: #0284c7;
-      --blue-glow: rgba(2, 132, 199, 0.1);
-      --danger: #dc2626;
-      --warning: #d97706;
-      --success: #16a34a;
-      --info: #0284c7;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
-      --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.12);
-    }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
       height: 100%;
@@ -141,7 +90,7 @@
       align-items: center;
       justify-content: center;
       background: var(--bg-elevated);
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      border: 1px solid color-mix(in srgb,var(--tone) 40%,transparent);
     }
     .brand-title {
       font-weight: 800;
@@ -164,7 +113,7 @@
       text-transform: uppercase;
       background: var(--primary-glow);
       color: var(--primary);
-      border: 1px solid rgba(239, 68, 68, 0.35);
+      border: 1px solid color-mix(in srgb,var(--tone) 35%,transparent);
     }
     .brand-sub {
       font-size: 11px;
@@ -299,7 +248,7 @@
     .nav-item.active {
       background: var(--primary-glow);
       color: var(--text-main);
-      border-color: rgba(239, 68, 68, 0.32);
+      border-color: color-mix(in srgb,var(--tone) 32%,transparent);
       font-weight: 600;
     }
     .nav-item.active i.mdi {
@@ -315,9 +264,9 @@
       border: 1px solid var(--border);
     }
     .nav-item.active .nav-badge {
-      background: rgba(239, 68, 68, 0.18);
+      background: color-mix(in srgb,var(--tone) 18%,transparent);
       color: var(--primary-hover);
-      border-color: rgba(239, 68, 68, 0.35);
+      border-color: color-mix(in srgb,var(--tone) 35%,transparent);
     }
 
     .sidebar-footer-card {
@@ -566,9 +515,9 @@
       font-family: 'JetBrains Mono', monospace;
     }
     .badge-red {
-      background: rgba(239, 68, 68, 0.14);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.3);
+      background: color-mix(in srgb,var(--tone) 14%,transparent);
+      color: var(--crit);
+      border: 1px solid color-mix(in srgb,var(--tone) 30%,transparent);
     }
     .badge-orange {
       background: rgba(249, 115, 22, 0.14);
@@ -593,7 +542,7 @@
 
     /* Terminal & Markdown Report Viewer */
     .terminal-box {
-      background: #06080c;
+      background: var(--well);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px;
@@ -625,7 +574,7 @@
       margin: 6px 0;
     }
     .report-box code {
-      background: rgba(239, 68, 68, 0.12);
+      background: color-mix(in srgb,var(--tone) 12%,transparent);
       color: var(--primary-hover);
       padding: 1px 5px;
       border-radius: 4px;
@@ -732,7 +681,7 @@
     }
     .chat-bubble.user {
       background: var(--primary-glow);
-      border: 1px solid rgba(239, 68, 68, 0.35);
+      border: 1px solid color-mix(in srgb,var(--tone) 35%,transparent);
       color: var(--text-main);
       align-self: flex-end;
     }
@@ -743,73 +692,11 @@
       gap: 8px;
     }
 
-    /* ---------------- Mobile / phone layout ---------------- */
-    .mobile-backdrop { display: none; }
     .set-row { display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: 12.5px; }
+      padding: 9px 0; border-bottom: 1px solid var(--border-subtle); font-size: 14px; flex-wrap: wrap; }
     .set-row:last-child { border-bottom: none; }
     .set-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
-    @media (max-width: 1024px) { .set-grid { grid-template-columns: 1fr; } }
-    /* Compact host/LLM status for phones (the header pills are hidden there). */
-    .mobile-status { display: none; gap: 5px; }
-    .mobile-status .status-dot { width: 9px; height: 9px; }
-
-    @media (max-width: 1024px) {
-      .mobile-status { display: inline-flex; align-items: center; justify-content: center; }
-
-      /* Touch targets: Apple HIG asks for 44pt, Material for 48dp. */
-      .btn, .btn-sm, .icon-btn, .nav-item, .select, .input,
-      .set-row button, .drawer-input-bar button { min-height: 44px; }
-      .icon-btn { min-width: 44px; }
-      .btn-sm { padding: 10px 14px; }
-      input[type="checkbox"], input[type="radio"] { width: 22px; height: 22px; }
-      label:has(input[type="checkbox"]), label:has(input[type="radio"]),
-      .set-row:has(> input[type="checkbox"]) { min-height: 44px; display: flex; align-items: center; }
-
-      .app-shell, .app-shell.sidebar-collapsed {
-        grid-template-columns: 1fr;
-        grid-template-areas: "header" "main";
-        height: 100vh;
-        height: 100dvh;
-      }
-      .header-center { display: none; }
-      .brand-sub, .team-badge { display: none; }
-      .brand-title { font-size: 17px; }
-      .app-main { padding: 14px 13px 96px; -webkit-overflow-scrolling: touch; }
-
-      /* Left nav becomes an off-canvas drawer, closed by default */
-      .app-sidebar {
-        position: fixed; top: 56px; left: 0; bottom: 0;
-        width: 252px; z-index: 60;
-        transform: translateX(-100%);
-        transition: transform .22s ease;
-        box-shadow: 0 16px 40px rgba(0,0,0,.6);
-      }
-      .app-shell.mobile-nav-open .app-sidebar { transform: translateX(0); }
-      /* ignore desktop collapse rules on mobile */
-      .app-shell.sidebar-collapsed .nav-group-label,
-      .app-shell.sidebar-collapsed .nav-label,
-      .app-shell.sidebar-collapsed .nav-badge,
-      .app-shell.sidebar-collapsed .sidebar-footer-card { display: revert; }
-
-      /* Right AI operator becomes an off-canvas drawer, closed by default */
-      .ai-drawer, .ai-drawer.closed {
-        position: fixed; top: 56px; right: 0; bottom: 0;
-        width: min(92vw, 380px); height: auto;
-        transform: translateX(100%);
-        opacity: 1; overflow: visible;
-        border-left: 1px solid var(--border);
-        z-index: 60; transition: transform .22s ease;
-      }
-      .app-shell.mobile-drawer-open .ai-drawer { transform: translateX(0); }
-
-      .mobile-backdrop {
-        position: fixed; inset: 56px 0 0 0;
-        background: rgba(0,0,0,.55); z-index: 55;
-      }
-      .app-shell.mobile-nav-open .mobile-backdrop,
-      .app-shell.mobile-drawer-open .mobile-backdrop { display: block; }
-    }
+    @media (max-width: 1024px) { .set-grid { grid-template-columns: minmax(0, 1fr) !important; } }
     /* Responsible-use terms dialog (first run, blocking) */
     .terms-overlay {
       position: fixed; inset: 0; z-index: 300;
@@ -868,7 +755,7 @@
     .conf-filter:empty { display: none; }
     .chip { border: 1px solid var(--border); background: transparent; color: var(--text-muted);
             border-radius: 999px; padding: 4px 11px; font-size: 12px; cursor: pointer; }
-    .chip.active { border-color: var(--primary); color: var(--text-main); background: rgba(239,68,68,.12); }
+    .chip.active { border-color: var(--primary); color: var(--text-main); background: color-mix(in srgb,var(--tone) 12%,transparent); }
     .conf { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; }
     .conf .bars { display: inline-flex; gap: 2px; }
     .conf .bars i { width: 4px; height: 11px; border-radius: 1px; background: var(--border); display: inline-block; }
@@ -896,11 +783,11 @@
 
     /* Finding Detail Drawer + Fix-First Priority */
     .f-row-click { cursor: pointer; transition: background .12s; }
-    .f-row-click:hover { background: rgba(239, 68, 68, 0.06); }
+    .f-row-click:hover { background: color-mix(in srgb,var(--tone) 6%,transparent); }
     .prio-pill { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono, monospace);
                  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 6px;
                  border: 1px solid var(--border); background: rgba(255,255,255,.03); }
-    .prio-pill.p-high { color: #f87171; border-color: rgba(239,68,68,.4); background: rgba(239,68,68,.1); }
+    .prio-pill.p-high { color: var(--crit); border-color: color-mix(in srgb,var(--tone) 40%,transparent); background: color-mix(in srgb,var(--tone) 10%,transparent); }
     .prio-pill.p-med { color: #fbbf24; border-color: rgba(245,158,11,.4); background: rgba(245,158,11,.1); }
     .prio-pill.p-low { color: var(--text-muted); }
     .finding-drawer-overlay { position: fixed; inset: 0; z-index: 950; background: rgba(0, 0, 0, .65);
@@ -926,9 +813,25 @@
       /* attack host rows: two fields per line on a phone, so addresses are not cut */
       .set-host-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr) !important; }
     }
+  /* frame: the main area scrolls on its own; rail, title bar and assistant come from suite.css */
+  .app-shell{grid-template-rows:56px minmax(0,1fr);grid-template-areas:"rail header drawer" "rail main drawer";height:100vh;height:100dvh;width:auto;transition:none}
+  .app-shell>.rail{grid-area:rail}.app-header{grid-area:header;min-width:0}.app-header .header-left{gap:10px;min-width:0}.app-header .header-right{margin-left:auto}
+  .app-main{min-width:0}.ai-drawer{grid-area:drawer}.page-title{display:none}
+  .rail-nav{flex:1;overflow:hidden auto;scrollbar-width:none;display:flex;flex-direction:column;gap:2px}
+  .page-header{align-items:center;margin-bottom:16px}.page-header .page-subtitle{margin:0}
+  @media (min-width:1025px){.page-header{flex-wrap:nowrap}.page-header>:last-child{flex:none}.page-header>:first-child{flex:1}
+    #view-settings .set-grid{display:block;columns:2;column-gap:16px}#view-settings .panel{break-inside:avoid}}
+  @media (max-width:1024px){
+    .app-shell,.app-shell.pinned{grid-template-rows:52px minmax(0,1fr);grid-template-areas:"header" "main"}
+    .app-shell>.rail,.ai-drawer{grid-area:auto}.app-main{padding:14px 12px 88px}
+    .page-header>div,.page-header>div>div{flex-wrap:wrap;max-width:100%}
+    .set-row>span{min-width:0;max-width:100%;flex-wrap:wrap}.target-grid{grid-template-columns:minmax(0,1fr)}
+    .panel-header>div{flex-wrap:wrap}.finding-drawer{width:100vw}
+  }
 </style>
+  <link rel="stylesheet" href="/static/suite.css" />
 </head>
-<body>
+<body data-quick="dashboard workbench targets reports" data-name="OniOps">
   <!-- Responsible-use terms: shown until the current user accepts. The server
        also refuses to start any test until acceptance is recorded. -->
   <div id="termsOverlay" class="terms-overlay" role="dialog" aria-modal="true"
@@ -970,103 +873,63 @@
     </div>
   </div>
   <div class="app-shell" id="appShell">
-    <div class="mobile-backdrop" id="mobileBackdrop"></div>
+    <div class="scrim" id="scrim"></div>
     <!-- Top Header -->
     <header class="app-header">
       <div class="header-left">
-        <button class="icon-btn" id="sidebarToggle" title="Toggle Navigation" aria-label="Open or close navigation">
+        <button class="icon-btn" id="menuBtn" aria-label="Open or close navigation">
           <i class="mdi mdi-menu"></i>
         </button>
-        <div class="brand">
-          <div class="brand-logo" title="OniOps — Offensive Neural Intelligence">
-            <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="lokiHeaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ef4444" />
-                  <stop offset="100%" stop-color="#dc2626" />
-                </linearGradient>
-              </defs>
-              <polygon points="32,3 57,15 52,45 32,61 12,45 7,15" fill="#0d1117" stroke="url(#lokiHeaderGrad)" stroke-width="2.5"/>
-              <path d="M18 40 C13 26 16 12 25 6 C21 16 21 25 27 32 L32 37 L37 32 C43 25 43 16 39 6 C48 12 51 26 46 40 L39 36 L32 54 L25 36 Z" fill="url(#lokiHeaderGrad)"/>
-              <polygon points="23,31 29,34 25,36" fill="#ffffff"/>
-              <polygon points="41,31 35,34 39,36" fill="#ffffff"/>
-            </svg>
-          </div>
-          <div>
-            <div class="brand-title">
-              OniOps
-              <span class="team-badge"><i class="mdi mdi-radar"></i> OFFENSIVE NEURAL INTELLIGENCE</span>
-            </div>
-            <div class="brand-sub">Autonomous Red Team // Provider-Agnostic AI</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="header-center">
-        <div class="status-pill" title="Attack host (SSH)">
-          <span class="status-dot" id="kaliDot"></span>
-          <span>Host: <strong id="kaliStatusText" class="mono">Checking...</strong></span>
-        </div>
-        <div class="status-pill" title="Active LLM Provider">
-          <span class="status-dot" id="ollamaDot"></span>
-          <span>LLM: <strong id="ollamaStatusText" class="mono">Checking...</strong></span>
-        </div>
+        <h1 id="pageTitle">Overview</h1>
       </div>
 
       <div class="header-right">
-        <!-- Phones hide the status pills; this keeps host/LLM health visible. -->
-        <button class="icon-btn mobile-status" id="mobileStatus" type="button"
-                aria-label="Attack host and LLM status" title="Status" onclick="showStatusToast()">
-          <span class="status-dot" id="mKaliDot"></span><span class="status-dot" id="mLlmDot"></span>
+        <button class="icon-btn" id="themeBtn" title="Dark or light theme" aria-label="Toggle dark or light theme">
+          <i class="mdi mdi-weather-night" ></i>
         </button>
-        <button class="icon-btn" id="themeToggle" title="Toggle Dark/Light Theme" aria-label="Toggle dark or light theme">
-          <i class="mdi mdi-weather-night" id="themeIcon"></i>
-        </button>
-        <button class="icon-btn" id="drawerToggle" title="Toggle Red Team AI Operator" aria-label="Open or close the AI operator">
+        <button class="icon-btn" id="drawerToggle" title="Assistant (Ctrl+I)" aria-label="Open or close the assistant" aria-expanded="false">
           <i class="mdi mdi-robot-outline"></i>
         </button>
       </div>
     </header>
 
     <!-- Left Sidebar -->
-    <aside class="app-sidebar">
-      <div>
-        <div class="nav-group-label">Red Team Operations</div>
-        <button class="nav-item active" data-view="dashboard" title="Command Center">
-          <span class="nav-item-left"><i class="mdi mdi-view-dashboard-outline"></i><span class="nav-label">Command Center</span></span>
+    <aside class="app-sidebar rail">
+      <div class="rail-nav">
+        <a class="brand" href="/"><img class="logo" src="/static/img/logo.svg" alt=""><span class="brand-text">OniOps<span class="ver">v{{ version }}</span></span></a>
+        <div class="nav-group-label nav-first">Investigate</div>
+        <button class="nav-item active" data-view="dashboard" title="Overview">
+          <span class="nav-item-left"><i class="mdi mdi-view-dashboard-outline"></i><span class="nav-label">Overview</span></span>
           <span class="nav-badge" id="navScansBadge">0</span>
         </button>
         <button class="nav-item" data-view="workbench" title="Recon Workbench">
-          <span class="nav-item-left"><i class="mdi mdi-console-network"></i><span class="nav-label">Recon Workbench</span></span>
-          <span class="nav-badge">LIVE</span>
+          <span class="nav-item-left"><i class="mdi mdi-console-network"></i><span class="nav-label">Workbench</span></span>
         </button>
         <button class="nav-item" data-view="agent" title="Autonomous AI Agent">
-          <span class="nav-item-left"><i class="mdi mdi-robot-excited-outline"></i><span class="nav-label">AI Agent</span></span>
-          <span class="nav-badge">AUTO</span>
+          <span class="nav-item-left"><i class="mdi mdi-robot-excited-outline"></i><span class="nav-label">Agent</span></span>
         </button>
         <button class="nav-item" data-view="targets" title="Target Matrix">
-          <span class="nav-item-left"><i class="mdi mdi-crosshairs-gps"></i><span class="nav-label">Target Matrix</span></span>
+          <span class="nav-item-left"><i class="mdi mdi-crosshairs-gps"></i><span class="nav-label">Targets</span></span>
           <span class="nav-badge" id="navTargetsBadge">0</span>
         </button>
         <button class="nav-item" data-view="graph" title="Attack Surface Graph">
-          <span class="nav-item-left"><i class="mdi mdi-graph-outline"></i><span class="nav-label">Attack Graph</span></span>
+          <span class="nav-item-left"><i class="mdi mdi-graph-outline"></i><span class="nav-label">Graph</span></span>
         </button>
         <button class="nav-item" data-view="arsenal" title="Attack Host Tools &amp; Installer">
-          <span class="nav-item-left"><i class="mdi mdi-package-variant-closed"></i><span class="nav-label">Tooling Arsenal</span></span>
-          <span class="nav-badge" id="navArsenalBadge">SSH</span>
+          <span class="nav-item-left"><i class="mdi mdi-package-variant-closed"></i><span class="nav-label">Tools</span></span>
+          <span class="nav-badge" id="navArsenalBadge"></span>
         </button>
 
-        <div class="nav-group-label">Adversary &amp; Intel</div>
+        <div class="nav-group-label">Knowledge</div>
         <button class="nav-item" data-view="intel" title="Exploit &amp; CVE Intel">
-          <span class="nav-item-left"><i class="mdi mdi-bug-outline"></i><span class="nav-label">Exploit &amp; CVE Intel</span></span>
+          <span class="nav-item-left"><i class="mdi mdi-bug-outline"></i><span class="nav-label">Intel</span></span>
           <span class="nav-badge" id="navCveBadge">0</span>
         </button>
         <button class="nav-item" data-view="aisec" title="AI / LLM Red Team &amp; GRC">
-          <span class="nav-item-left"><i class="mdi mdi-brain"></i><span class="nav-label">AI Red Team</span></span>
-          <span class="nav-badge">LLM</span>
+          <span class="nav-item-left"><i class="mdi mdi-brain"></i><span class="nav-label">AI testing</span></span>
         </button>
         <button class="nav-item" data-view="reports" title="Assessment Reports">
-          <span class="nav-item-left"><i class="mdi mdi-file-document-outline"></i><span class="nav-label">Assessment Reports</span></span>
+          <span class="nav-item-left"><i class="mdi mdi-file-document-outline"></i><span class="nav-label">Reports</span></span>
         </button>
 
         <div class="nav-group-label" style="margin-top:10px;">System</div>
@@ -1075,13 +938,9 @@
         </button>
       </div>
 
-      <div class="sidebar-footer-card">
-        <div class="sidebar-footer-title" id="hostCardTitle">
-          <i class="mdi mdi-console-network" style="color: var(--text-dim);"></i> Checking attack host…
-        </div>
-        <div style="color: var(--text-muted); line-height: 1.4;" id="hostCardText">
-          Testing SSH to your attack host. Add more hosts in Settings.
-        </div>
+      <div class="rail-status">
+        <div title="Attack host (SSH)"><span class="status-dot" id="kaliDot"></span><span class="txt">Host: <span id="kaliStatusText">Checking...</span></span></div>
+        <div title="AI model"><span class="status-dot" id="ollamaDot"></span><span class="txt">Model: <span id="ollamaStatusText">Checking...</span></span></div>
       </div>
     </aside>
 
@@ -1150,7 +1009,7 @@
         <div class="panel">
           <div class="panel-header">
             <div class="panel-title"><i class="mdi mdi-flash"></i> Quick-Launch Assessment</div>
-            <span class="badge badge-red">ATTACK HOST</span>
+            <span class="badge badge-red">Attack host</span>
           </div>
           <div class="panel-body" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
             <select id="quickTargetSelect" aria-label="Target" class="select" style="min-width:250px;"></select>
@@ -1240,12 +1099,12 @@
           </div>
           <div class="panel-body" style="display:grid; grid-template-columns: 1fr 1fr auto; gap:12px; align-items:end;">
             <div>
-              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">TARGET (IN SCOPE)</label>
+              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Target in scope</label>
               <select id="wbTargetSelect" aria-label="Target" class="select" style="width:100%;"></select>
               <input id="wbTargetInput" class="input" style="width:100%; margin-top:6px;" placeholder="…or type an in-scope IP / domain" aria-label="Target IP or domain" />
             </div>
             <div>
-              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">ASSESSMENT PROFILE</label>
+              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Assessment profile</label>
               <select id="wbProfileSelect" aria-label="Assessment profile" class="select" style="width:100%;">
                 <option value="autonomous_ai">Autonomous AI Red-Team Playbook (Nmap + Web + Exploit-DB + LLM)</option>
                 <option value="fast_recon">Fast Tactical Recon (Top 100 TCP Ports + Service Detection)</option>
@@ -1304,7 +1163,7 @@
           <div class="panel">
             <div class="panel-header">
               <div class="panel-title"><i class="mdi mdi-robot-outline"></i> OniOps Red-Team Executive Report</div>
-              <span class="badge badge-red">MITRE ATT&amp;CK + REMEDIATION</span>
+              <span class="badge badge-red">ATT&amp;CK and fixes</span>
             </div>
             <div class="panel-body">
               <div class="report-box" id="wbAiReport">
@@ -1433,7 +1292,7 @@
         <div class="panel">
           <div class="panel-header">
             <div class="panel-title"><i class="mdi mdi-magnify"></i> Exploit-DB (`searchsploit`) Advisory Lookup</div>
-            <span class="badge badge-red">KALI EXPLOIT-DB ARCHIVE</span>
+            <span class="badge badge-red">Exploit-DB on the attack host</span>
           </div>
           <div class="panel-body">
             <div style="display:flex; gap:10px; margin-bottom:14px;">
@@ -1582,11 +1441,11 @@
           <div class="panel-body">
             <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:end;">
               <div style="flex:1; min-width:220px;">
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">ENDPOINT BASE URL</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Endpoint base URL</label>
                 <input id="aisecUrl" aria-label="AI endpoint URL" class="input" style="width:100%;" placeholder="http://host:11434 (Ollama) or https://api.example.com (OpenAI)" />
               </div>
               <div>
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">MODEL</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Model</label>
                 <input id="aisecModel" aria-label="Model name" class="input" placeholder="e.g. qwen2.5-coder:7b" />
               </div>
               <div>
@@ -1594,7 +1453,7 @@
                 <select id="aisecApi" aria-label="AI endpoint API type" class="select" onchange="document.getElementById('aisecCustomFields').style.display=this.value==='custom'?'block':'none'"><option value="ollama">Ollama</option><option value="openai">OpenAI-compatible</option><option value="custom">Custom endpoint</option></select>
               </div>
               <div>
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">CONVERTER</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Converter</label>
                 <select id="aisecConverter" aria-label="Prompt converter" class="select">
                   <option value="none">Direct + 3-Turn Crescendo</option>
                   <option value="leetspeak">Leetspeak Obfuscation</option>
@@ -1607,7 +1466,7 @@
               <button class="btn btn-primary" id="aisecRunBtn" onclick="runAiSec()"><i class="mdi mdi-play"></i> Run Assessment</button>
             </div>
             <div style="margin-top:12px;">
-              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">SYSTEM PROMPT (optional)</label>
+              <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">System prompt (optional)</label>
               <textarea id="aisecSystem" aria-label="System prompt under test" class="input" rows="2" style="width:100%; font-family:inherit; resize:vertical;" placeholder="Paste your app's system prompt to test the guardrailed app instead of the raw model."></textarea>
             </div>
             <div style="display:flex; gap:18px; flex-wrap:wrap; margin-top:10px; font-size:12px; color:var(--text-muted); align-items:center;">
@@ -1654,19 +1513,19 @@
         <div class="panel">
           <div class="panel-header"><div class="panel-title"><i class="mdi mdi-target"></i> Mission</div></div>
           <div class="panel-body">
-            <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">OBJECTIVE</label>
+            <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Objective</label>
             <input id="agentObjective" aria-label="Agent objective" class="input" style="width:100%;" placeholder="e.g. Enumerate services on the adguard host and flag any exposures" />
             <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; align-items:end;">
               <div style="flex:1; min-width:180px;">
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">TARGET (optional)</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Target (optional)</label>
                 <select id="agentTarget" aria-label="Agent target" class="select" style="width:100%;"></select>
               </div>
               <div>
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">MAX STEPS</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Max steps</label>
                 <select id="agentMaxSteps" aria-label="Maximum agent steps" class="select"><option>6</option><option selected>8</option><option>10</option><option>12</option></select>
               </div>
               <div style="flex:1; min-width:200px;">
-                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">GREY-BOX AUTH HEADER (optional)</label>
+                <label style="display:block; font-size:11.5px; color:var(--text-muted); margin-bottom:5px; font-weight:600;">Grey-box auth header (optional)</label>
                 <input id="agentAuthHeader" aria-label="Optional authenticated header for the agent" class="input" style="width:100%;" placeholder="Authorization: Bearer ... or Cookie: ..." />
               </div>
               <button class="btn btn-primary" id="agentRunBtn" onclick="runAgent()"><i class="mdi mdi-play"></i> Run Agent</button>
@@ -1726,15 +1585,15 @@
       <div class="drawer-header">
         <div class="drawer-title">
           <i class="mdi mdi-robot-outline"></i>
-          OniOps // RED-TEAM OPERATOR
+          Assistant
         </div>
-        <button class="icon-btn" onclick="toggleDrawer()" style="width:28px; height:28px;" aria-label="Close the AI operator" title="Close">
+        <button class="icon-btn" id="drawerClose" type="button" aria-label="Close the assistant" title="Close">
           <i class="mdi mdi-close"></i>
         </button>
       </div>
       <div class="drawer-messages" id="chatMessages">
         <div class="chat-bubble assistant">
-          <strong>OniOps Red-Team Operator</strong><br/>
+          <strong>OniOps assistant</strong><br/>
           <span id="chatHostStatus" style="color:var(--text-muted);">Checking your attack host…</span><br/>
           You can ask me to:<br/>
           • <code>install whatweb</code> or <code>install sslscan</code> on the attack host<br/>
@@ -1743,7 +1602,7 @@
         </div>
       </div>
       <div class="drawer-input-bar">
-        <input type="text" id="chatInput" class="input" placeholder="Ask OniOps or run a tool..." aria-label="Message the AI operator" style="flex:1;" onkeydown="if(event.key==='Enter') sendChatMessage()" />
+        <input type="text" id="chatInput" class="input" placeholder="Ask OniOps or run a tool..." aria-label="Message the assistant" style="flex:1;" onkeydown="if(event.key==='Enter') sendChatMessage()" />
         <button class="btn btn-primary" onclick="sendChatMessage()" aria-label="Send message" title="Send">
           <i class="mdi mdi-send"></i>
         </button>
@@ -1752,6 +1611,7 @@
   </div>
 
   <script>
+    const escH = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
     let TARGETS_CACHE = [];
     let SCANS_CACHE = [];
 
@@ -1763,7 +1623,8 @@
     function switchView(viewName) {
       document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.view === viewName));
       document.querySelectorAll('.view-section').forEach(s => s.classList.toggle('active', s.id === `view-${viewName}`));
-      if (isMobile()) document.getElementById('appShell').classList.remove('mobile-nav-open');
+      document.querySelector('.app-main').scrollTop = 0;
+      if (location.hash.slice(1) !== viewName) location.hash = viewName;
       if (viewName === 'graph') loadGraph();
       if (viewName === 'reports') loadScansHistory();
       if (viewName === 'arsenal') loadKaliTools();
@@ -1771,43 +1632,6 @@
       if (viewName === 'workbench') loadJobsBar();
       if (viewName === 'aisec') loadAisecProbesMeta();
     }
-
-    const isMobile = () => window.matchMedia('(max-width: 1024px)').matches;
-    const appShell = document.getElementById('appShell');
-
-    document.getElementById('sidebarToggle').addEventListener('click', () => {
-      if (isMobile()) {
-        appShell.classList.remove('mobile-drawer-open');
-        appShell.classList.toggle('mobile-nav-open');
-      } else {
-        appShell.classList.toggle('sidebar-collapsed');
-      }
-    });
-
-    function toggleDrawer() {
-      if (isMobile()) {
-        appShell.classList.remove('mobile-nav-open');
-        appShell.classList.toggle('mobile-drawer-open');
-      } else {
-        document.getElementById('aiDrawer').classList.toggle('closed');
-      }
-    }
-    document.getElementById('drawerToggle').addEventListener('click', toggleDrawer);
-
-    document.getElementById('mobileBackdrop').addEventListener('click', () => {
-      appShell.classList.remove('mobile-nav-open', 'mobile-drawer-open');
-    });
-
-    // Theme Toggle
-    const savedTheme = localStorage.getItem('oniops_theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('oniops_theme', next);
-      document.getElementById('themeIcon').className = next === 'dark' ? 'mdi mdi-weather-night' : 'mdi mdi-white-balance-sunny';
-    });
 
     // Safe Markdown formatter
     function renderMarkdown(md) {
@@ -1846,21 +1670,7 @@
         document.getElementById('ollamaDot').className = dotCls(llmState);
         document.getElementById('ollamaStatusText').textContent =
           {online: data.current_model || 'Online', offline: 'Offline', checking: 'Checking...'}[llmState];
-        document.getElementById('mKaliDot').className = dotCls(hostState);
-        document.getElementById('mLlmDot').className = dotCls(llmState);
 
-        // Sidebar card + AI operator greeting describe the REAL host state.
-        const card = {
-          online:   ['mdi-console-network', 'var(--success)', 'Attack host connected',
-                     `Scope-locked SSH execution on ${hostName}. Add more hosts in Settings.`],
-          offline:  ['mdi-lan-disconnect', 'var(--warning)', 'Attack host offline',
-                     `Can't reach ${hostName} over SSH. Start it, or check Settings → Attack Hosts.`],
-          checking: ['mdi-console-network', 'var(--text-dim)', 'Checking attack host…',
-                     `Testing SSH to ${hostName}…`],
-        }[hostState];
-        document.getElementById('hostCardTitle').innerHTML =
-          `<i class="mdi ${card[0]}" style="color:${card[1]};"></i> ${card[2]}`;
-        document.getElementById('hostCardText').textContent = card[3];
         const chat = document.getElementById('chatHostStatus');
         if (chat) chat.textContent = {online: `Connected to ${hostName}.`,
           offline: `${hostName} is offline — tool commands will fail until it is reachable.`,
@@ -1892,7 +1702,7 @@
 
         const qSel = document.getElementById('quickTargetSelect');
         const wSel = document.getElementById('wbTargetSelect');
-        const opts = TARGETS_CACHE.map(t => `<option value="${t.ip}">${t.hostname} (${t.ip}) — ${t.role}</option>`).join('');
+        const opts = TARGETS_CACHE.map(t => `<option value="${escH(t.ip)}">${escH(t.hostname)} (${escH(t.ip)}) — ${escH(t.role)}</option>`).join('');
         // Explicit choice (never a silent default target), a helpful empty
         // state, and keep whatever the user picked across auto-refreshes.
         const placeholder = TARGETS_CACHE.length
@@ -1924,7 +1734,7 @@
 
         document.getElementById('prioritySurfaceTable').innerHTML = sorted.map(t => {
           const portsHtml = (t.services || []).length
-            ? t.services.slice(0, 5).map(p => `<span class="badge badge-orange">${p.port}/${p.service}</span>`).join(' ')
+            ? t.services.slice(0, 5).map(p => `<span class="badge badge-orange">${p.port}/${escH(p.service)}</span>`).join(' ')
             : `<span class="badge badge-neutral">Unscanned</span>`;
           const cveCount = (t.vulns?.critical || 0) + (t.vulns?.high || 0);
           const cveBadge = cveCount > 0
@@ -1932,11 +1742,11 @@
             : `<span class="badge badge-green">0 Crit/High</span>`;
           return `
             <tr>
-              <td><strong>${t.hostname}</strong><div style="font-size:11px; color:var(--text-muted);">${t.role}</div></td>
-              <td class="mono">${t.ip}</td>
+              <td><strong>${escH(t.hostname)}</strong><div style="font-size:11px; color:var(--text-muted);">${escH(t.role)}</div></td>
+              <td class="mono">${escH(t.ip)}</td>
               <td>${portsHtml}</td>
               <td>${cveBadge}</td>
-              <td><button class="btn btn-sm" onclick="launchTargetInWorkbench('${t.ip}')"><i class="mdi mdi-radar"></i> Assess</button></td>
+              <td><button class="btn btn-sm" onclick="launchTargetInWorkbench('${escH(t.ip)}')"><i class="mdi mdi-radar"></i> Assess</button></td>
             </tr>
           `;
         }).join('') || `<tr><td colspan="5">${emptyState('mdi-radar', 'No hosts in scope yet',
@@ -1945,12 +1755,12 @@
 
         document.getElementById('intelFleetCveTable').innerHTML = TARGETS_CACHE.filter(t => ((t.vulns?.critical || 0) + (t.vulns?.high || 0)) > 0).map(t => `
           <tr>
-            <td><strong>${t.hostname}</strong></td>
-            <td class="mono">${t.ip}</td>
+            <td><strong>${escH(t.hostname)}</strong></td>
+            <td class="mono">${escH(t.ip)}</td>
             <td><span class="badge badge-red">${t.vulns.critical}</span></td>
             <td><span class="badge badge-orange">${t.vulns.high}</span></td>
             <td class="mono" style="font-size:11.5px;">Total CVEs: ${t.vulns.total} (Med: ${t.vulns.medium})</td>
-            <td><button class="btn btn-sm" onclick="launchTargetInWorkbench('${t.ip}')">Validate</button></td>
+            <td><button class="btn btn-sm" onclick="launchTargetInWorkbench('${escH(t.ip)}')">Validate</button></td>
           </tr>
         `).join('') || `<tr><td colspan="6">${emptyState('mdi-bug-check-outline', 'No high or critical CVEs found',
           'Known CVEs and exploits for detected service versions show up here after an assessment.',
@@ -1978,21 +1788,21 @@
             <div>
               <div class="target-card-top">
                 <div>
-                  <div class="target-name">${t.hostname}</div>
-                  <div class="target-ip">${t.ip}</div>
+                  <div class="target-name">${escH(t.hostname)}</div>
+                  <div class="target-ip">${escH(t.ip)}</div>
                 </div>
-                <span class="badge badge-neutral">${(t.type || '').toUpperCase()} // ${t.node}</span>
+                <span class="badge badge-neutral">${(t.type || '').toUpperCase()} // ${escH(t.node)}</span>
               </div>
-              <div class="target-role" style="margin-top:6px;">${t.role}</div>
+              <div class="target-role" style="margin-top:6px;">${escH(t.role)}</div>
               <div style="margin-top:10px; display:flex; gap:5px; flex-wrap:wrap;">
-                ${ports.length ? ports.map(p => `<span class="badge badge-orange">${p.port}/${p.service}</span>`).join('') : '<span class="badge badge-neutral">Not yet scanned</span>'}
+                ${ports.length ? ports.map(p => `<span class="badge badge-orange">${p.port}/${escH(p.service)}</span>`).join('') : '<span class="badge badge-neutral">Not yet scanned</span>'}
               </div>
             </div>
             <div style="display:flex; align-items:center; justify-content:space-between; padding-top:8px; border-top:1px solid var(--border-subtle);">
               <span class="badge ${cveCrit + cveHigh > 0 ? 'badge-red' : 'badge-green'}">
                 CVEs: ${cveCrit}C / ${cveHigh}H
               </span>
-              <button class="btn btn-sm btn-primary" onclick="launchTargetInWorkbench('${t.ip}')">
+              <button class="btn btn-sm btn-primary" onclick="launchTargetInWorkbench('${escH(t.ip)}')">
                 <i class="mdi mdi-radar"></i> Assess
               </button>
             </div>
@@ -2019,20 +1829,20 @@
         hosts.forEach(h => { const svcs = svcByHost[h.ip] || []; const band = Math.max(svcs.length, 1) * 22; rows.push({h, svcs, top: y, cy: y + band / 2}); y += band + 20; });
         const H = Math.max(y + 20, 240), scopeY = H / 2;
         let svg = `<svg width="820" height="${H}" viewBox="0 0 820 ${H}" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">`;
-        rows.forEach(r => { svg += `<line x1="${scopeX}" y1="${scopeY}" x2="${hostX}" y2="${r.cy}" stroke="#2a3344" stroke-width="1"/>`; });
-        svg += `<circle cx="${scopeX}" cy="${scopeY}" r="10" fill="#0d1117" stroke="#ef4444" stroke-width="2"/>`;
-        svg += `<text x="${scopeX}" y="${scopeY - 16}" fill="#94a3b8" font-size="11" text-anchor="middle">scope</text>`;
+        rows.forEach(r => { svg += `<line x1="${scopeX}" y1="${scopeY}" x2="${hostX}" y2="${r.cy}" stroke="var(--rule)" stroke-width="1"/>`; });
+        svg += `<circle cx="${scopeX}" cy="${scopeY}" r="10" fill="var(--well)" stroke="var(--tone)" stroke-width="2"/>`;
+        svg += `<text x="${scopeX}" y="${scopeY - 16}" fill="var(--ink-2)" font-size="12" text-anchor="middle">scope</text>`;
         rows.forEach(r => {
           const c = riskColor(r.h.risk);
           r.svcs.forEach((v, i) => {
             const sy = r.top + i * 22 + 11;
-            svg += `<line x1="${hostX}" y1="${r.cy}" x2="${svcX}" y2="${sy}" stroke="#222b3a" stroke-width="1"/>`;
-            svg += `<g><title>${esc(r.h.label)} — ${esc(v.label)}</title><circle cx="${svcX}" cy="${sy}" r="4" fill="#38bdf8"/><text x="${svcX + 10}" y="${sy + 4}" fill="#cbd5e1" font-size="11.5" font-family="JetBrains Mono,monospace">${esc(v.label)}</text></g>`;
+            svg += `<line x1="${hostX}" y1="${r.cy}" x2="${svcX}" y2="${sy}" stroke="var(--rule)" stroke-width="1"/>`;
+            svg += `<g><title>${esc(r.h.label)} — ${esc(v.label)}</title><circle cx="${svcX}" cy="${sy}" r="4" fill="var(--note)"/><text x="${svcX + 10}" y="${sy + 4}" fill="var(--ink)" font-size="11.5" font-family="JetBrains Mono,monospace">${esc(v.label)}</text></g>`;
           });
           svg += `<g style="cursor:pointer;" onclick="launchTargetInWorkbench('${r.h.ip}')"><title>${esc(r.h.label)} (${esc(r.h.ip)}) — risk ${esc(r.h.risk)}, ${r.h.findings || 0} findings. Click to assess.</title>`;
-          svg += `<circle cx="${hostX}" cy="${r.cy}" r="8" fill="${c}" stroke="#0d1117" stroke-width="2"/>`;
-          svg += `<text x="${hostX - 14}" y="${r.cy - 2}" fill="#f1f5f9" font-size="12.5" text-anchor="end">${esc(r.h.label)}</text>`;
-          svg += `<text x="${hostX - 14}" y="${r.cy + 12}" fill="#64748b" font-size="10.5" text-anchor="end" font-family="JetBrains Mono,monospace">${esc(r.h.ip)}${r.h.findings ? ` · ${r.h.findings} find` : ''}</text></g>`;
+          svg += `<circle cx="${hostX}" cy="${r.cy}" r="8" fill="${c}" stroke="var(--well)" stroke-width="2"/>`;
+          svg += `<text x="${hostX - 14}" y="${r.cy - 2}" fill="var(--ink)" font-size="12.5" text-anchor="end">${esc(r.h.label)}</text>`;
+          svg += `<text x="${hostX - 14}" y="${r.cy + 12}" fill="var(--ink-2)" font-size="10.5" text-anchor="end" font-family="JetBrains Mono,monospace">${esc(r.h.ip)}${r.h.findings ? ` · ${r.h.findings} find` : ''}</text></g>`;
         });
         svg += '</svg>';
         document.getElementById('graphCanvas').innerHTML = svg;
@@ -2045,8 +1855,8 @@
       if (!items.length) return '<div style="color:var(--text-dim); font-size:12px;">No data yet.</div>';
       const max = Math.max(1, ...items.map(i => i.value));
       return items.map(i => `
-        <div style="display:flex; align-items:center; gap:8px; margin:6px 0;" title="${i.label}: ${i.value}">
-          <div style="width:${labelW}px; font-size:11px; color:var(--text-muted); text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${i.label}</div>
+        <div style="display:flex; align-items:center; gap:8px; margin:6px 0;" title="${escH(i.label)}: ${escH(i.value)}">
+          <div style="width:${labelW}px; font-size:11px; color:var(--text-muted); text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${escH(i.label)}</div>
           <div style="flex:1; background:var(--bg-input); border-radius:4px; height:16px;">
             <div style="width:${Math.round(100 * i.value / max)}%; min-width:4px; height:100%; background:${i.color}; border-radius:4px;"></div>
           </div>
@@ -2054,7 +1864,7 @@
         </div>`).join('');
     }
     function renderAnalytics(g, hosts) {
-      const sev = {CRITICAL:'#ef4444', HIGH:'#f87171', MEDIUM:'#f59e0b', LOW:'#22c55e', UNKNOWN:'#64748b'};
+      const sev = {CRITICAL:'#ef4444', HIGH:'var(--crit)', MEDIUM:'#f59e0b', LOW:'#22c55e', UNKNOWN:'#64748b'};
       const order = ['CRITICAL','HIGH','MEDIUM','LOW','UNKNOWN'];
       const riskCounts = {};
       hosts.forEach(h => { const r = h.risk || 'UNKNOWN'; riskCounts[r] = (riskCounts[r] || 0) + 1; });
@@ -2090,19 +1900,13 @@
       }
     }
 
-    function showStatusToast() {
-      const s = window.__oniStatus || {};
-      const word = v => ({online: 'online', offline: 'offline', checking: 'checking…'}[v] || 'unknown');
-      toast(`Attack host (${s.hostName || '—'}): ${word(s.hostState)}  ·  LLM${s.model ? ' (' + s.model + ')' : ''}: ${word(s.llmState)}`,
-            s.hostState === 'offline' || s.llmState === 'offline');
-    }
 
     function toast(msg, bad) {
       let t = document.getElementById('oniToast');
-      if (!t) { t = document.createElement('div'); t.id = 'oniToast';
-        t.style.cssText = 'position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--bg-elevated);color:var(--text-main);padding:10px 16px;border-radius:8px;z-index:200;font-size:13px;box-shadow:0 10px 28px rgba(0,0,0,.55);transition:opacity .2s;';
+      if (!t) { t = document.createElement('div'); t.id = 'oniToast'; t.setAttribute('role', 'status');
+        t.style.cssText = 'position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:10px 16px;border-radius:8px;z-index:200;font-size:13px;box-shadow:0 10px 28px rgba(0,0,0,.55);transition:opacity .2s;';
         document.body.appendChild(t); }
-      t.style.border = '1px solid ' + (bad ? 'var(--danger)' : 'var(--success)');
+      t.style.borderLeft = '4px solid ' + (bad ? 'var(--danger)' : 'var(--success)');
       t.textContent = msg; t.style.opacity = '1';
       clearTimeout(window._tt); window._tt = setTimeout(() => { t.style.opacity = '0'; }, 2600);
     }
@@ -2172,7 +1976,7 @@
           `<div class="set-row"><span>Allowed CIDRs</span><input class="input" id="scCidrs" aria-label="Allowed CIDRs, comma separated" value="${esc((cfg.scope.allowed_cidrs || []).join(', '))}" style="width:58%; font-size:12px;"/></div>` +
           `<div class="set-row"><span>Excluded</span><input class="input" id="scExclude" aria-label="Excluded addresses, comma separated" value="${esc((cfg.scope.exclude || []).join(', '))}" placeholder="none" style="width:58%; font-size:12px;"/></div>` +
           `<div class="set-row"><span>Mode</span><select class="select" id="scMode" aria-label="Scope mode">${['active','passive','stealth'].map(m => `<option ${m === cfg.scope.mode ? 'selected' : ''}>${m}</option>`).join('')}</select></div>` +
-          `<div class="set-row"><span>Non-destructive guard</span><input type="checkbox" id="scND" ${cfg.scope.non_destructive ? 'checked' : ''}/></div>` +
+          `<div class="set-row"><span>Non-destructive guard</span><input type="checkbox" id="scND" aria-label="Non-destructive guard" ${cfg.scope.non_destructive ? 'checked' : ''}/></div>` +
           `<div style="margin-top:10px;"><button class="btn btn-sm btn-primary" onclick="saveScope()">Save scope</button></div>`;
 
         // Security (read-only — auth is config-file/restart only)
@@ -2189,7 +1993,7 @@
                 <label style="font-size:11px; display:flex; gap:3px; align-items:center;"><input type="checkbox" id="int_${k}_e" ${cfg.integrations[k].enabled ? 'checked' : ''}/>on</label>
               </span></div>`).join('') +
           `<div class="set-row"><span>NVD CVE enrichment (offline + optional online)<br>
-             <small style="color:var(--muted);font-size:10px;">searchsploit works offline always; this adds live CVE IDs + CVSS from nvd.nist.gov. No MISP needed.</small></span>
+             <small style="color:var(--text-muted);font-size:10px;">searchsploit works offline always; this adds live CVE IDs + CVSS from nvd.nist.gov. No MISP needed.</small></span>
              <span style="display:flex; gap:6px; align-items:center;">
                <input class="input" id="int_nvd_k" aria-label="NVD API key (optional)" value="" placeholder="${cfg.integrations.nvd && cfg.integrations.nvd.has_key ? 'key set — leave blank to keep' : 'optional API key'}" style="width:150px; font-size:12px;"/>
                <label style="font-size:11px; display:flex; gap:3px; align-items:center;"><input type="checkbox" id="int_nvd_e" ${cfg.integrations.nvd && cfg.integrations.nvd.enabled ? 'checked' : ''}/>on</label>
@@ -2513,16 +2317,15 @@
         const rowsHtml = SCANS_CACHE.slice(0, 8).map(s => `
           <tr>
             <td class="mono">#${s.id}</td>
-            <td><strong>${s.target_name || s.target_ip}</strong> <span class="mono" style="color:var(--text-muted); font-size:11.5px;">(${s.target_ip})</span></td>
+            <td><strong>${escH(s.target_name || s.target_ip)}</strong> <span class="mono" style="color:var(--text-muted); font-size:11.5px;">(${escH(s.target_ip)})</span></td>
             <td><span class="badge badge-neutral">${s.profile}</span></td>
-            <td style="font-size:11.5px;">${s.open_ports || 'None'}</td>
+            <td style="font-size:11.5px;">${escH(s.open_ports || 'None')}</td>
             <td><span class="badge ${s.severity === 'CRITICAL' || s.severity === 'HIGH' ? 'badge-red' : 'badge-orange'}">${s.severity} (${s.finding_count} findings)</span></td>
             <td><button class="btn btn-sm" onclick="inspectScan(${s.id})">Report</button></td>
           </tr>
         `).join('') || `<tr><td colspan="6">${emptyState('mdi-history', 'No assessments yet',
           'Pick a target and a profile in Quick-Launch above, or open the Workbench for more options.',
           'Open Workbench', "switchView('workbench')")}</td></tr>`;
-        document.getElementById('kpiFleetCves').textContent = SCANS_CACHE.reduce((a, s) => a + (s.finding_count || 0), 0);
 
         document.getElementById('recentScansTable').innerHTML = rowsHtml;
 
@@ -2530,9 +2333,9 @@
           <tr>
             <td class="mono">#${s.id}</td>
             <td style="font-size:11.5px; color:var(--text-muted);">${(s.timestamp || '').replace('T', ' ').slice(0, 19)}</td>
-            <td><strong>${s.target_name || s.target_ip}</strong></td>
+            <td><strong>${escH(s.target_name || s.target_ip)}</strong></td>
             <td><span class="badge badge-neutral">${s.profile}</span></td>
-            <td style="font-size:11.5px;">${s.open_ports || '-'}</td>
+            <td style="font-size:11.5px;">${escH(s.open_ports || '-')}</td>
             <td><button class="btn btn-sm" onclick="inspectScan(${s.id})">Inspect</button></td>
           </tr>
         `).join('') || `<tr><td colspan="6">${emptyState('mdi-file-document-outline', 'No reports yet',
@@ -2746,7 +2549,7 @@
         document.getElementById('wbRawOutput').textContent = data.raw_output || 'Completed.';
         document.getElementById('wbAiReport').innerHTML = renderMarkdown(data.ai_report);
         document.getElementById('wbPortsBar').innerHTML = (data.ports_list || []).map(p =>
-          `<span class="badge badge-red">${p.port}/${p.proto} ${p.service} ${p.banner || ''}</span>`
+          `<span class="badge badge-red">${escH(p.port)}/${escH(p.proto)} ${escH(p.service)} ${escH(p.banner || '')}</span>`
         ).join('');
         refreshAll();
       } catch (e) {
@@ -2762,19 +2565,19 @@
       const q = document.getElementById('exploitQueryInput').value.trim();
       if (!q) return;
       const tbody = document.getElementById('exploitResultsTable');
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:18px;">Querying Exploit-DB for "${q}"...</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:18px;">Querying Exploit-DB for "${escH(q)}"...</td></tr>`;
       try {
         const res = await fetch(`/api/intel?q=${encodeURIComponent(q)}`);
         const data = await res.json();
         const list = data.exploits || [];
         tbody.innerHTML = list.length ? list.map(e => `
           <tr>
-            <td><span class="badge badge-red">EDB-${e.id}</span></td>
-            <td><strong>${e.title}</strong></td>
-            <td><span class="badge badge-neutral">${e.type} / ${e.platform}</span></td>
-            <td class="mono" style="font-size:11.5px; color:var(--text-muted);">${e.codes || e.date || '-'}</td>
+            <td><span class="badge badge-red">EDB-${escH(e.id)}</span></td>
+            <td><strong>${escH(e.title)}</strong></td>
+            <td><span class="badge badge-neutral">${escH(e.type)} / ${escH(e.platform)}</span></td>
+            <td class="mono" style="font-size:11.5px; color:var(--text-muted);">${escH(e.codes || e.date || '-')}</td>
           </tr>
-        `).join('') : `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:18px;">No public Exploit-DB advisories matched "${q}".</td></tr>`;
+        `).join('') : `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:18px;">No public Exploit-DB advisories matched "${escH(q)}".</td></tr>`;
       } catch (e) {
         tbody.innerHTML = `<tr><td colspan="4" style="color:var(--danger); padding:18px;">Error querying Exploit-DB: ${e}</td></tr>`;
       }
@@ -2813,9 +2616,12 @@
       const tb = document.getElementById('findingsLedgerTable');
       if (!tb) return;
       try {
+        const turn = (window._ledgerTurn = (window._ledgerTurn || 0) + 1);
         const res = await fetch('/api/findings');
         const data = await res.json();
+        if (turn !== window._ledgerTurn) return;
         const all = data.findings || [];
+        document.getElementById('kpiFleetCves').textContent = all.length;
         const filterEl = document.getElementById('confFilter');
         if (!all.length) {
           if (filterEl) filterEl.innerHTML = '';
@@ -3107,10 +2913,13 @@
 
     refreshAll();
     const _qp = new URLSearchParams(window.location.search);
-    if (_qp.get('drawer') === 'closed') document.getElementById('aiDrawer')?.classList.add('closed');
-    if (_qp.get('view')) switchView(_qp.get('view'));
+    // Each view has its own address, so Back, reload and shared links keep the view.
+    const viewFromHash = () => { const v = location.hash.slice(1); return document.getElementById('view-' + v) ? v : ''; };
+    window.addEventListener('hashchange', () => { const v = viewFromHash() || 'dashboard'; if (!document.getElementById('view-' + v).classList.contains('active')) switchView(v); });
+    if (_qp.get('view') || viewFromHash()) switchView(_qp.get('view') || viewFromHash());
     if (_qp.get('inspect')) setTimeout(() => inspectScan(parseInt(_qp.get('inspect'), 10)), 900);
     setInterval(loadStatus, 25000);
   </script>
+  <script src="/static/suite.js"></script>
 </body>
 </html>

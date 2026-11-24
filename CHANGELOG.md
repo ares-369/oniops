@@ -7,6 +7,22 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+### Added
+
+- Column sorting, a loading bar, a skip link, and keyboard access to rows that open something.
+- Every view has its own address, so Back, reload and shared links keep the view.
+
+### Changed
+
+- The web UI has the same frame in OniOps, Actaeon and Zarqa: an icon sidebar that opens on hover and can be pinned, a
+  title bar, dark and light themes, and on phones a bottom bar and tables shown as labelled records. New logo.
+
+### Fixed
+
+- Text from tools, hostnames and the server is escaped before it is shown in tables, the graph and the port list.
+- The findings count on the overview comes from the ledger.
+- Attack host and settings rows fit a phone screen; controls have accessible names and readable contrast.
+
 ## [0.4.12-beta] — 2026-11-23
 
 ### Added

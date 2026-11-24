@@ -5,11 +5,11 @@
 .mdi-alert-octagram::before{content:"\F0767"}
 .mdi-alert-outline::before{content:"\F002A"}
 .mdi-arrow-right::before{content:"\F0054"}
+.mdi-assistant::before{content:"\F0064"}
 .mdi-brain::before{content:"\F09D1"}
 .mdi-bug-check-outline::before{content:"\F0A2F"}
 .mdi-bug-outline::before{content:"\F0A30"}
 .mdi-cancel::before{content:"\F073A"}
-.mdi-card::before{content:"\F0B6F"}
 .mdi-chart-bar::before{content:"\F0128"}
 .mdi-chart-donut::before{content:"\F07AF"}
 .mdi-check::before{content:"\F012C"}
@@ -43,9 +43,9 @@
 .mdi-information-outline::before{content:"\F02FD"}
 .mdi-label::before{content:"\F0315"}
 .mdi-lan-connect::before{content:"\F0318"}
-.mdi-lan-disconnect::before{content:"\F0319"}
 .mdi-lan-pending::before{content:"\F031A"}
 .mdi-loading::before{content:"\F0772"}
+.mdi-login::before{content:"\F0342"}
 .mdi-magnify::before{content:"\F0349"}
 .mdi-magnify-scan::before{content:"\F1276"}
 .mdi-menu::before{content:"\F035C"}
@@ -67,11 +67,11 @@
 .mdi-server-network::before{content:"\F048D"}
 .mdi-shield-alert-outline::before{content:"\F0ECD"}
 .mdi-shield-check-outline::before{content:"\F0CC8"}
-.mdi-shield-half-full::before{content:"\F0780"}
 .mdi-shield-key-outline::before{content:"\F0BC5"}
 .mdi-shield-search::before{content:"\F0D9A"}
 .mdi-stethoscope::before{content:"\F04D9"}
 .mdi-stop-circle::before{content:"\F0666"}
+.mdi-table::before{content:"\F04EB"}
 .mdi-target::before{content:"\F04FE"}
 .mdi-text::before{content:"\F09A8"}
 .mdi-timeline-text-outline::before{content:"\F0BD4"}

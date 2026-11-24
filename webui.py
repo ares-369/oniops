@@ -259,7 +259,7 @@ def add_security_headers(resp):
 # ═══════════════════════════════════════════════════════
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", version=__version__)
 
 
 # ── Health cache ──────────────────────────────────────────────────────────
