@@ -35,7 +35,9 @@ two seconds). It shows the workflow, not real-world detection. Rebuild it with
 > for harm to any person or organization, or for modified versions made by
 > others. Please read the [Responsible Use and Disclaimer](DISCLAIMER.md).
 
-![OniOps Command Center](docs/screenshots/oniops_dashboard.png)
+![OniOps overview](docs/screenshots/oniops_dashboard.png)
+
+*Screenshots use a simulated lab and sample data.*
 
 | Attack-Surface Graph & Analytics | Findings Ledger & Retest |
 | --- | --- |

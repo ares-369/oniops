@@ -149,3 +149,22 @@ def test_tool_and_host_text_is_escaped(server):
         assert page.locator("main img").count() == 0
         assert page.evaluate("window.__x") is None
         b.close()
+
+
+def test_overview_counts_the_ledger_whatever_loads_last(server):
+    """The targets list used to overwrite the findings count when it answered after the ledger."""
+    with sync_api.sync_playwright() as p:
+        b = _browser(p)
+        page = b.new_page(viewport={"width": 1400, "height": 900})
+        finding = {"id": 1, "target_ip": "192.0.2.1", "title": "t", "severity": "LOW", "status": "VERIFIED", "evidence": "e"}
+        page.route("**/api/findings", lambda r: r.fulfill(json={"findings": [finding, {**finding, "id": 2}]}))
+
+        def slow_targets(route):
+            time.sleep(1)
+            route.fulfill(json={"targets": []})
+
+        page.route("**/api/targets", slow_targets)
+        _open(page, server)
+        page.wait_for_timeout(2000)
+        assert page.inner_text("#kpiFleetCves") == "2"
+        b.close()

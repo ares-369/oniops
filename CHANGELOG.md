@@ -7,6 +7,8 @@ behaviour may still change between releases.
 
 ## [Unreleased]
 
+## [0.4.13-beta] — 2026-11-24
+
 ### Added
 
 - Column sorting, a loading bar, a skip link, and keyboard access to rows that open something.
@@ -20,7 +22,9 @@ behaviour may still change between releases.
 ### Fixed
 
 - Text from tools, hostnames and the server is escaped before it is shown in tables, the graph and the port list.
-- The findings count on the overview comes from the ledger.
+- The findings count on the overview comes from the ledger (two requests wrote it, and the slower one won). The
+  assessment list calls its own number tool matches.
+- Report text: list bullets are visible and headings have no empty lines around them.
 - Attack host and settings rows fit a phone screen; controls have accessible names and readable contrast.
 
 ## [0.4.12-beta] — 2026-11-23
